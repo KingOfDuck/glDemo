@@ -132,13 +132,24 @@
   <ItemGroup>
     <ClInclude Include="src\AppWindow.h" />
     <ClInclude Include="src\glDemo.h" />
+    <ClInclude Include="src\objects\camera.h" />
+    <ClInclude Include="src\objects\myobject\TestObject.h" />
+    <ClInclude Include="src\objects\myobject\TestStage.h" />
     <ClInclude Include="src\objects\object.h" />
+    <ClInclude Include="src\objects\stage.h" />
+    <ClInclude Include="src\utils\log.h" />
+    <ClInclude Include="src\utils\time.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lib\glad.c" />
     <ClCompile Include="src\AppWindow.cpp" />
     <ClCompile Include="src\glDemo.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\objects\myobject\Test.cpp" />
     <ClCompile Include="src\objects\object.cpp" />
+    <ClCompile Include="src\objects\stage.cpp" />
+    <ClCompile Include="src\utils\log.cpp" />
+    <ClCompile Include="src\utils\time.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

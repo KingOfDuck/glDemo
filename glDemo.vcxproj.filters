@@ -6,6 +6,24 @@
     <ClInclude Include="src\objects\object.h">
       <Filter>objects</Filter>
     </ClInclude>
+    <ClInclude Include="src\objects\stage.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\log.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\camera.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\time.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\myobject\TestStage.h">
+      <Filter>objects\myobject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\myobject\TestObject.h">
+      <Filter>objects\myobject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\glDemo.cpp" />
@@ -14,6 +32,19 @@
       <Filter>lib</Filter>
     </ClCompile>
     <ClCompile Include="src\objects\object.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\utils\log.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\time.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\myobject\Test.cpp">
+      <Filter>objects\myobject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\stage.cpp">
       <Filter>objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -26,6 +57,9 @@
     </Filter>
     <Filter Include="objects">
       <UniqueIdentifier>{b10b414a-c2a1-4d22-a8ec-1d19209cfc68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objects\myobject">
+      <UniqueIdentifier>{9114a828-9f62-478f-a742-d1add7966598}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,5 +1,7 @@
 #include "AppWindow.h"
 #include "glDemo.h"
+#include "utils/time.h"
+#include "objects/stage.h"
 
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
@@ -35,20 +37,32 @@ int AppWindow::initGLWindow() {
 		return InitCode::gladInitFail;
 	}
 	
+	//Set Callbacks
 	glfwSetWindowSizeCallback(_window, AppWindow::framebufferSizeCallback);
+
+	//Init stages
+	initStage();
 
 	return InitCode::success;
 }
 
-//window loop, after drawing as well as\
- doing other things, swap buffers and then poll events
-int AppWindow::loop() {
-	glfwSwapBuffers(_window);
+//window loop
+//In each loop, window first call stages to draw
+//after stages done all the steps, the buffer is ready and then swapbuffers
+void AppWindow::loop() {
+	
+	Time::Step();
+	
 	glfwPollEvents();
+
+	_stage->step();	
+
+	glfwSwapBuffers(_window);
 }
 
 
 //STATIC CALLBACK FUNCTION
+//called when windows size has changed
 void AppWindow::framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }

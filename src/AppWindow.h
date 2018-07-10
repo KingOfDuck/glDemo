@@ -1,9 +1,9 @@
 #ifndef __APPWINDOW_H
 #define __APPWINDOW_H
-#endif
 
 class GLFWwindow; 
 class glDemoApp;
+class Stage;
 
 class AppWindow {
 	friend class glDemoApp;//only glDemoApp can use _window
@@ -11,9 +11,12 @@ private:
 	int _clientWidth;
 	int _clientHeight;
 	GLFWwindow* _window;
+	Stage *_stage;//A window may consists of different stages, and may use several stages at the same time, e.g. spilt window
+		//In demo, only one stage is used. TODO: Multiple Stages
 
 private:
 	static void framebufferSizeCallback(GLFWwindow* window, int width, int height);
+	void initStage();//Customize init stage
 public:
 	AppWindow();
 	enum InitCode {
@@ -22,5 +25,6 @@ public:
 		gladInitFail
 	};
 	int initGLWindow();
-	int loop();
+	void loop();
 };
+#endif
