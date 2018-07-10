@@ -16,7 +16,7 @@ stage, a Camera is also needed.
 
 */
 class Stage {
-private:
+protected:
 	std::vector<Object*> _objects;
 	Canvas* _canvas;
 	Camera* _camera;
@@ -26,6 +26,8 @@ public:
 	Stage(AppWindow* w);
 	~Stage();
 	
+	//Stage is the CONTROLLER of all the objects, including movements, textures, colors
+	//and so on.
 	virtual void step()=0;
 private:
 	//banned

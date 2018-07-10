@@ -28,6 +28,9 @@ void Canvas::draw() {
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
+void Canvas::drawObj(Object* o) {
+	o->draw();
+}
 Canvas::~Canvas(){
 
 }

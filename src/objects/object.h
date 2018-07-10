@@ -10,7 +10,7 @@ public:
 	virtual void draw()=0;//接口，每一个Object必须draw
 };
 
-//Canvas, draw items on it!
+//Canvas, background
 class Canvas:Object{
 private:
 	float _red, _green, _blue, _alpha;
@@ -22,5 +22,6 @@ public:
 
 	~Canvas();
 	virtual void draw();
+	void drawObj(Object* obj);
 };
 #endif

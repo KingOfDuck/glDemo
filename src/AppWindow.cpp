@@ -50,14 +50,20 @@ int AppWindow::initGLWindow() {
 //In each loop, window first call stages to draw
 //after stages done all the steps, the buffer is ready and then swapbuffers
 void AppWindow::loop() {
-	
-	Time::Step();
-	
-	glfwPollEvents();
+	int t;
+	while (!glfwWindowShouldClose(_window)) {
+		Time::Step();
+		t = Time::DeltaTime() * 1000;
+		if (t < glDemoApp::MAX_FRAME_SEC) {
+			Sleep(glDemoApp::MAX_FRAME_SEC - t);
+		}
 
-	_stage->step();	
+		glfwPollEvents();
 
-	glfwSwapBuffers(_window);
+		_stage->step();
+
+		glfwSwapBuffers(_window);
+	}
 }
 
 

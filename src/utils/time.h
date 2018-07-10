@@ -6,8 +6,8 @@ private:
 	static double _time;
 	static double _deltatime;
 public:
-	static double GetTime();
-	static double DeltaTime();
+	static inline double GetTime() { return _time; }
+	static inline double DeltaTime() { return _deltatime; }
 	static void Step();
 };
 #endif
