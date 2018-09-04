@@ -5,6 +5,7 @@
 
 
 class Shader;
+class Texture;
 class Object {
 public:
 	virtual void draw()=0;//接口，每一个Object必须draw
@@ -22,6 +23,17 @@ public:
 
 	~Canvas();
 	virtual void draw();
-	void drawObj(Object* obj);
+};
+
+//Object with a shader
+class drawObject : public Object {
+protected:
+	unsigned int _vbo, _vao; //顶点缓冲对象，顶点数组对象
+	glm::vec3 _position;//位置
+	glm::vec3 _model;//模型视图矩阵
+	Shader* _shader;//着色器
+	Texture* _texture;//纹理
+public:
+	virtual void draw() = 0;
 };
 #endif

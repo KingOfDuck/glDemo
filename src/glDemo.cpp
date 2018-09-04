@@ -15,17 +15,13 @@ glDemoApp::~glDemoApp() {
 }
 
 int glDemoApp::init() {
-	int code;
-
 	//Init Log
 	Log::initMessage();
 
-
 	//Init window
 	_window = new AppWindow();
-	code = _window->initGLWindow();
 
-	if (code != AppWindow::InitCode::success) {
+	if (_window->initGLWindow() != AppWindow::InitCode::success) {
 		Log::log(GLDEMO_MES_WINDOW_INIT_FAIL);
 		return -1;
 	}

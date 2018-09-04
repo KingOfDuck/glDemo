@@ -136,7 +136,9 @@
     <ClInclude Include="src\objects\myobject\TestObject.h" />
     <ClInclude Include="src\objects\myobject\TestStage.h" />
     <ClInclude Include="src\objects\object.h" />
+    <ClInclude Include="src\objects\shader.h" />
     <ClInclude Include="src\objects\stage.h" />
+    <ClInclude Include="src\objects\texture.h" />
     <ClInclude Include="src\utils\log.h" />
     <ClInclude Include="src\utils\time.h" />
   </ItemGroup>
@@ -145,11 +147,18 @@
     <ClCompile Include="src\AppWindow.cpp" />
     <ClCompile Include="src\glDemo.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\objects\camera.cpp" />
     <ClCompile Include="src\objects\myobject\Test.cpp" />
     <ClCompile Include="src\objects\object.cpp" />
+    <ClCompile Include="src\objects\shader.cpp" />
     <ClCompile Include="src\objects\stage.cpp" />
+    <ClCompile Include="src\objects\texture.cpp" />
     <ClCompile Include="src\utils\log.cpp" />
     <ClCompile Include="src\utils\time.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\triangle.frag" />
+    <None Include="shaders\triangle.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -17,9 +17,9 @@ stage, a Camera is also needed.
 */
 class Stage {
 protected:
-	std::vector<Object*> _objects;
-	Canvas* _canvas;
-	Camera* _camera;
+	std::vector<Object*> _objects;//Objects, alternative
+	Canvas* _canvas;//Canvas, must have one
+	Camera* _camera;//Camera, more than one
 	AppWindow* _window;//a stage must be set in a window, this parameter shows
 		//its parent window
 public:
@@ -28,7 +28,8 @@ public:
 	
 	//Stage is the CONTROLLER of all the objects, including movements, textures, colors
 	//and so on.
-	virtual void step()=0;
+	virtual void step() = 0;
+	virtual void draw();
 private:
 	//banned
 	Stage();

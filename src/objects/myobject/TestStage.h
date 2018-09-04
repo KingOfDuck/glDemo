@@ -7,6 +7,7 @@ class TestStage :public Stage {
 public:
 	TestStage(AppWindow* w);
 	void step();
+	void draw();
 private:
 	TestStage();
 	TestStage(TestStage&); 

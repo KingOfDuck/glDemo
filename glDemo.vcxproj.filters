@@ -24,6 +24,12 @@
     <ClInclude Include="src\objects\myobject\TestObject.h">
       <Filter>objects\myobject</Filter>
     </ClInclude>
+    <ClInclude Include="src\objects\shader.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\texture.h">
+      <Filter>objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\glDemo.cpp" />
@@ -47,6 +53,15 @@
     <ClCompile Include="src\objects\stage.cpp">
       <Filter>objects</Filter>
     </ClCompile>
+    <ClCompile Include="src\objects\camera.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\shader.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\texture.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="lib">
@@ -61,5 +76,16 @@
     <Filter Include="objects\myobject">
       <UniqueIdentifier>{9114a828-9f62-478f-a742-d1add7966598}</UniqueIdentifier>
     </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{174782c5-a37a-4fe6-926b-ac7406ac7e2c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\triangle.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\triangle.frag">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

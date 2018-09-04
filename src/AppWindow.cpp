@@ -30,15 +30,14 @@ int AppWindow::initGLWindow() {
 		return InitCode::windowCreateFail;
 	}
 	glfwMakeContextCurrent(_window);
+	//Set Callbacks
+	glfwSetWindowSizeCallback(_window, AppWindow::framebufferSizeCallback);
 
 	//Init GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		glfwTerminate();
 		return InitCode::gladInitFail;
 	}
-	
-	//Set Callbacks
-	glfwSetWindowSizeCallback(_window, AppWindow::framebufferSizeCallback);
 
 	//Init stages
 	initStage();
@@ -50,17 +49,17 @@ int AppWindow::initGLWindow() {
 //In each loop, window first call stages to draw
 //after stages done all the steps, the buffer is ready and then swapbuffers
 void AppWindow::loop() {
-	int t;
 	while (!glfwWindowShouldClose(_window)) {
 		Time::Step();
-		t = Time::DeltaTime() * 1000;
+		int t = ((int)Time::DeltaTime()) * 1000;
 		if (t < glDemoApp::MAX_FRAME_SEC) {
 			Sleep(glDemoApp::MAX_FRAME_SEC - t);
 		}
 
 		glfwPollEvents();
-
 		_stage->step();
+
+		_stage->draw();
 
 		glfwSwapBuffers(_window);
 	}

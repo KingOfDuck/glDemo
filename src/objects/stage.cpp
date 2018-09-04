@@ -16,3 +16,9 @@ Stage::~Stage() {
 	delete _canvas;
 	delete _camera;
 }
+
+void Stage::draw() {
+	glEnable(GL_DEPTH_TEST);
+	_canvas->draw();
+	_camera->step();
+}

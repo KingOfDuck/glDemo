@@ -16,7 +16,7 @@ private:
 
 private:
 	static void framebufferSizeCallback(GLFWwindow* window, int width, int height);
-	void initStage();//Customize init stage
+	void initStage();//Customize init stage, Must be overwritten
 public:
 	AppWindow();
 	enum InitCode {

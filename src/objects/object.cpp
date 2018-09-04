@@ -25,12 +25,9 @@ Canvas::Canvas(glm::vec4 color) {
 //Before drawing on a Canvas, clear the screen first
 void Canvas::draw() {
 	glClearColor(_red, _green, _blue, _alpha);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Canvas::drawObj(Object* o) {
-	o->draw();
-}
 Canvas::~Canvas(){
 
 }
