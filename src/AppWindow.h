@@ -25,6 +25,12 @@ public:
 		gladInitFail
 	};
 	int initGLWindow();
+	inline int getClientWidth() {
+		return _clientWidth;
+	}
+	inline int getClientHeight() {
+		return _clientHeight;
+	}
 	void loop();
 };
 #endif

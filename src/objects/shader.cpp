@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 #include <string>
 
 //一个Shader必须同时有两个着色器，不使用默认着色器
@@ -59,7 +60,10 @@ void Shader::setInt(const char* name, int val) {
 	int l = glGetUniformLocation(_id, name);
 	glUniform1i(l, val);
 }
-
+void Shader::setMatrix(const char* name, glm::mat4 &m) {
+	int l = glGetUniformLocation(_id, name);
+	glUniformMatrix4fv(l, 1, GL_FALSE, glm::value_ptr(m));
+}
 //使用int，出错用负数，未出错用正数
 int Shader::compile(const char* filename, shadertype type) {
 	std::ifstream file(filename);

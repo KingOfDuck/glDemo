@@ -22,16 +22,17 @@ private:
 	glm::mat4 _view;//view matrix
 public:
 	Camera();
+	//ÒÆ¶¯
 	void move(float x, float y, float z);
-	inline void moveTo(float x, float y, float z) {
-		_pos.x += x;
-		_pos.y += y;
-		_pos.z += z;
-	};
+	//ÒÆ¶¯ÖÁ
+	void moveTo(float x, float y, float z);
+	//Ðý×ª¸©Ñö½Ç
 	void rotate(float pitch, float yaw);
+	//Ðý×ªÖÁ¸©Ñö½Ç
 	void rotateTo(float pitch, float yaw);
+
 	void step();
-	inline glm::mat4 getViewMatrix() {
+	inline glm::mat4& getViewMatrix() {
 		return _view;
 	}
 };

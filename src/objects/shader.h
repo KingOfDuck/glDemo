@@ -1,5 +1,6 @@
 #ifndef __SHADER_H
 #define __SHADER_H
+#include <glm/mat4x4.hpp>
 
 #define SHADER_VERT_COMPILE_ERROR -1
 #define SHADER_FRAG_COMPILE_ERROR -2
@@ -16,6 +17,7 @@ public:
 	Shader(const char* vertex, const char* fragment);
 	void use();
 	void setInt(const char* name, int val);
+	void setMatrix(const char* name, glm::mat4 &matrix);
 	~Shader();
 private:
 	int compile(const char* filename, shadertype type);

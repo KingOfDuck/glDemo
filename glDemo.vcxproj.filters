@@ -40,9 +40,6 @@
     <ClCompile Include="lib\glad.c">
       <Filter>lib</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\object.cpp">
-      <Filter>objects</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\utils\log.cpp">
       <Filter>utils</Filter>
@@ -63,6 +60,12 @@
       <Filter>objects</Filter>
     </ClCompile>
     <ClCompile Include="src\objects\texture.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\canvas.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objects\drawobject.cpp">
       <Filter>objects</Filter>
     </ClCompile>
   </ItemGroup>

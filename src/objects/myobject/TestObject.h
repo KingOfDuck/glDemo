@@ -11,31 +11,25 @@ private:
 	int _nvert;
 	unsigned int * _indices;
 	int _nind;
+	float _angle;
 public:
-	TestObject();
-	TestObject(float*vertices, int nvert);
-	TestObject(float*vertices, int nvert, glm::vec3 &position);
+	TestObject(float*vertices, int nvert, Stage* s);
 
-	void move(float x, float y, float z) {
-		_position.x += x;
-		_position.y += y;
-		_position.z += z;
-	}
-	void moveTo(float x, float y, float z) {
-		_position.x = x;
-		_position.y = y;
-		_position.z = z;
-	}
 	void setIndices(unsigned int* indices, int nind);
-	inline void init() {
-		bindBuffer();
-	}
+	void init();
 	void bindBuffer();
+	void rotatex(float angle);
+
+	///override
 	void draw();
+	///override
+	void step();
 private:
+	TestObject();
 	TestObject(std::vector<float>* vertices);
 	TestObject(std::vector<float>&vertices);
 	TestObject(std::vector<float>* vertices, glm::vec3 &position);
 	TestObject(std::vector<float>&vertices, glm::vec3 &position);
+	TestObject(float*vertices, int nvert, glm::vec3 &position);
 };
 #endif

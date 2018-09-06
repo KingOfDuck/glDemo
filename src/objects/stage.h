@@ -3,6 +3,7 @@
 #endif
 
 #include <vector>
+#include <glm/mat4x4.hpp>
 
 class Camera;
 class Object;
@@ -20,6 +21,8 @@ protected:
 	std::vector<Object*> _objects;//Objects, alternative
 	Canvas* _canvas;//Canvas, must have one
 	Camera* _camera;//Camera, more than one
+	glm::mat4 _projection;
+
 	AppWindow* _window;//a stage must be set in a window, this parameter shows
 		//its parent window
 public:
@@ -28,6 +31,14 @@ public:
 	
 	//Stage is the CONTROLLER of all the objects, including movements, textures, colors
 	//and so on.
+
+	//设置透视投影
+	void setPerspective(float fieldOfView,float aspectRatio, float Near, float far);
+	inline glm::mat4& getProjection() {
+		return _projection;
+	}
+	glm::mat4& getView();
+
 	virtual void step() = 0;
 	virtual void draw();
 private:

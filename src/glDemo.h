@@ -1,7 +1,7 @@
 #ifndef __GLDEMO_H
 #define __GLDEMO_H
 
-#define APPLICATION_NAME "glDemo³ÌÐò"
+#define APPLICATION_NAME "glDemoTest"
 #define MAX_FRAME 120
 
 class AppWindow;

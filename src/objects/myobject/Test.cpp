@@ -1,4 +1,5 @@
 #include <glad/glad.h>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "TestObject.h"
 #include "TestStage.h"
@@ -6,6 +7,8 @@
 #include "../camera.h"
 #include "../shader.h"
 #include "../texture.h"
+#include "../../utils/time.h"
+
 
 float vertices[] = {
 	//     ---- 位置 ----       ---- 颜色 ----     - 纹理坐标 -
@@ -28,8 +31,9 @@ TestStage::TestStage(AppWindow *w) :
 	//TODO: Init Objects;
 	_canvas = new Canvas(0.8f, 1.0f, 0.8f);
 	_camera = new Camera();
-
-	_objects.push_back(reinterpret_cast<Object*>(new TestObject(vertices, 32)));
+	setPerspective(45.0f, (float)w->getClientWidth() / (float)w->getClientHeight(), 0.1f, 100.0f);
+	
+	_objects.push_back(reinterpret_cast<Object*>(new TestObject(vertices, 32, this)));
 }
 
 void TestStage::step() {
@@ -37,6 +41,7 @@ void TestStage::step() {
 	//Preparing the informations for drawing: status, movements, textures, lightlings, shaders, ...
 	for (auto i = _objects.begin(); i != _objects.end(); ++i) {
 		//TODO: Objects Movement
+		(*i)->step();
 	}
 
 }
@@ -50,27 +55,19 @@ void TestStage::draw() {
 	}
 }
 
-
-
-TestObject::TestObject() :_vertices(NULL), _nvert(0) {
-	_position.x = _position.y = _position.z = 0;
-	init();
-}
-TestObject::TestObject(float*vertices, int nvert) :_vertices(vertices), _nvert(nvert) {
+TestObject::TestObject(float*vertices, int nvert, Stage* s) :_vertices(vertices), _nvert(nvert),drawObject(s) {
 	_shader = new Shader("shaders/triangle.vert","shaders/triangle.frag");
 	_texture.push_back(new Texture("textures/container.jpg",GL_RGB));
 	_texture.push_back(new Texture("textures/awesomeface.png",GL_RGBA));
-	_model = glm::vec3(0.0f, 0.0f, 0.0f);
-	_position = glm::vec3(0.0f, 0.0f, 0.0f);
+	_stage = s;
 	setIndices(indices, 6);
 	init();
 };
-TestObject::TestObject(float*vertices, int nvert, glm::vec3 &position) :
-	_vertices(vertices), _nvert(nvert){
-	_position = position;
-	init();
-}
 
+void TestObject::init() {
+	bindBuffer();
+	rotatex(-55.0f);
+}
 void TestObject::bindBuffer() {
 	glGenVertexArrays(1, &_vao);
 	glGenBuffers(1, &_vbo);
@@ -92,12 +89,19 @@ void TestObject::bindBuffer() {
 	_shader->setInt("tex2", 1);
 }
 
+void TestObject::step() {
+	float t = (float)Time::DeltaTime();
+	rotate(t*10);
+}
 void TestObject::draw() {
 	glActiveTexture(GL_TEXTURE0);
 	_texture[0]->use(); 
 	glActiveTexture(GL_TEXTURE1);
 	_texture[1]->use();
-	_shader->use(); 
+	_shader->use();
+	_shader->setMatrix("projection", _stage->getProjection());
+	_shader->setMatrix("view", _stage->getView());
+	_shader->setMatrix("model", _model);
 	glBindVertexArray(_vao);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
@@ -106,4 +110,8 @@ void TestObject::draw() {
 void TestObject::setIndices(unsigned int* indices, int nind) {
 	_indices = indices;
 	_nind = nind;
+}
+
+void TestObject::rotatex(float angle) {
+	_model = glm::rotate(_model, glm::radians(angle), glm::vec3(1.0f, 0.0f, 0.0f));
 }
