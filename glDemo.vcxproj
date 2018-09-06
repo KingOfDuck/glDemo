@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="lib\stb_image.h" />
     <ClInclude Include="src\AppWindow.h" />
     <ClInclude Include="src\glDemo.h" />
     <ClInclude Include="src\objects\camera.h" />

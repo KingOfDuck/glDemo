@@ -15,6 +15,7 @@ private:
 public:
 	Shader(const char* vertex, const char* fragment);
 	void use();
+	void setInt(const char* name, int val);
 	~Shader();
 private:
 	int compile(const char* filename, shadertype type);

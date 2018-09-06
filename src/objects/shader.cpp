@@ -2,12 +2,15 @@
 #include <iostream>
 #include <fstream>
 #include <glad/glad.h>
+#include <string>
 
 //一个Shader必须同时有两个着色器，不使用默认着色器
 Shader::Shader(const char* vertex, const char* fragment) {
 	int vs, fs;
 
-	if (strcmp(vertex, ".vert")) {
+	std::string t;
+	t = vertex;
+	if (t.find(".vert") != std::string::npos) {
 		vs = compile(vertex, shadertype::vertex);
 	}
 	else {
@@ -20,7 +23,8 @@ Shader::Shader(const char* vertex, const char* fragment) {
 		return;
 	}
 
-	if (strcmp(fragment, ".frag")) {
+	t = fragment;
+	if (t.find(".frag")!= std::string::npos) {
 		fs = compile(fragment, shadertype::fragment);
 	}
 	else {
@@ -50,6 +54,10 @@ Shader::Shader(const char* vertex, const char* fragment) {
 
 void Shader::use() {
 	glUseProgram(_id);
+}
+void Shader::setInt(const char* name, int val) {
+	int l = glGetUniformLocation(_id, name);
+	glUniform1i(l, val);
 }
 
 //使用int，出错用负数，未出错用正数

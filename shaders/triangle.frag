@@ -1,6 +1,13 @@
 #version 330 core
-out vec4 color;
+out vec4 fcol;
+	
+in vec3 Color;
+in vec2 Tex;
+
+uniform sampler2D tex;
+uniform sampler2D tex2;
+
 
 void main(){
-	color = vec4(0.0f,0.5f,0.2f,1.0f);
+	fcol = mix(texture(tex,Tex),texture(tex2,Tex),0.2);
 }

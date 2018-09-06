@@ -30,6 +30,9 @@
     <ClInclude Include="src\objects\texture.h">
       <Filter>objects</Filter>
     </ClInclude>
+    <ClInclude Include="lib\stb_image.h">
+      <Filter>lib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\glDemo.cpp" />

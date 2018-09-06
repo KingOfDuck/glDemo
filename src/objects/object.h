@@ -2,6 +2,7 @@
 #define __OBJECT_H
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
+#include <vector>
 
 
 class Shader;
@@ -28,11 +29,13 @@ public:
 //Object with a shader
 class drawObject : public Object {
 protected:
-	unsigned int _vbo, _vao; //顶点缓冲对象，顶点数组对象
+	unsigned int _vbo;//顶点缓冲对象
+	unsigned int _vao;//顶点数组对象
+	unsigned int _ebo;//数组索引，可选
 	glm::vec3 _position;//位置
 	glm::vec3 _model;//模型视图矩阵
-	Shader* _shader;//着色器
-	Texture* _texture;//纹理
+	Shader* _shader;//着色器，必须
+	std::vector<Texture*> _texture;//纹理，可选
 public:
 	virtual void draw() = 0;
 };

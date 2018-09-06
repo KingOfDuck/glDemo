@@ -9,6 +9,8 @@ class TestObject : drawObject {
 private:
 	float * _vertices;
 	int _nvert;
+	unsigned int * _indices;
+	int _nind;
 public:
 	TestObject();
 	TestObject(float*vertices, int nvert);
@@ -24,6 +26,7 @@ public:
 		_position.y = y;
 		_position.z = z;
 	}
+	void setIndices(unsigned int* indices, int nind);
 	inline void init() {
 		bindBuffer();
 	}
