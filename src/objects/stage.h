@@ -47,4 +47,7 @@ private:
 	Stage(Stage &);
 	Stage(Stage &&);
 	Stage(Stage *);
+
+	//Input Process
+	virtual void _inputProcess() = 0;
 };

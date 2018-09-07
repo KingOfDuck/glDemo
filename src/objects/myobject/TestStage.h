@@ -13,5 +13,7 @@ private:
 	TestStage(TestStage&); 
 	TestStage(TestStage&&);
 	TestStage(TestStage*);
+
+	void _inputProcess();
 };
 #endif

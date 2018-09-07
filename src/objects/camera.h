@@ -10,12 +10,13 @@
 	Camera has two directions: pitch(y-offset) and yaw(z-offset)
 
 */
-#define CAMERA_DEFAULTHEIGHT 3.0f
+#define CAMERA_DEFAULTHEIGHT 0.0f
 
 class Camera {
 private:
 	GLfloat _pitch;
 	GLfloat _yaw;
+	GLfloat _speed;//camera speed
 	glm::vec3 _pos;//position
 	glm::vec3 _front;//front vector
 	glm::vec3 _up;//up vector
@@ -26,12 +27,22 @@ public:
 	void move(float x, float y, float z);
 	//移动至
 	void moveTo(float x, float y, float z);
+	//向前移动
+	void moveFront(float val);
+	//向左移动
+	void moveLeft(float val);
+
 	//旋转俯仰角
 	void rotate(float pitch, float yaw);
 	//旋转至俯仰角
 	void rotateTo(float pitch, float yaw);
 
 	void step();
+
+	//设置速度
+	inline void setSpeed(GLfloat s) { _speed = s; }
+
+	//获取视图矩阵
 	inline glm::mat4& getViewMatrix() {
 		return _view;
 	}

@@ -6,9 +6,19 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 
-AppWindow::AppWindow():
-	_clientWidth(800),_clientHeight(600){
+AppWindow *AppWindow::currentWindow;
 
+AppWindow::AppWindow():
+	_clientWidth(800), _clientHeight(600){
+	_mouse._dirty = false;
+	_mouse._firstinput = true;
+	_mouse._lastx = _mouse._lasty = 0.0f;
+	_mouse._mouseSense = DEFAULT_MOUSE_SENSITIVITY;
+	_mouse._offsetx = _mouse._offsety = 0.0f;
+
+	for (int i = 0; i < 512; ++i) {
+		_key[i] = false;
+	}
 }
 
 //Standard Initialization
@@ -25,23 +35,12 @@ int AppWindow::initGLWindow() {
 
 	//Create Window
 	_window = glfwCreateWindow(_clientWidth, _clientHeight, glDemoApp::APP_NAME, NULL, NULL);
+
 	if (_window == NULL) {
 		glfwTerminate();
 		return InitCode::windowCreateFail;
 	}
-	glfwMakeContextCurrent(_window);
-	//Set Callbacks
-	glfwSetWindowSizeCallback(_window, AppWindow::framebufferSizeCallback);
-
-	//Init GLAD
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-		glfwTerminate();
-		return InitCode::gladInitFail;
-	}
-
-	//Init stages
-	initStage();
-
+	
 	return InitCode::success;
 }
 
@@ -61,13 +60,71 @@ void AppWindow::loop() {
 
 		_stage->draw();
 
+		//鼠标消息修改不放在stage中，而在window中，避免意外，stage只读取数据
+		//每一个循环后检查鼠标状态，如果没有移动，设置为false
+		if (_mouse._dirty) {
+			_mouse._dirty = false;
+			_mouse._offsetx = _mouse._offsety = 0.0f;
+		}
+
 		glfwSwapBuffers(_window);
 	}
 }
 
+void AppWindow::use() {
+	currentWindow = this;
+
+	glfwMakeContextCurrent(_window);
+	//Set Callbacks
+	glfwSetWindowSizeCallback(_window, AppWindow::framebufferSizeCallback);
+	glfwSetKeyCallback(_window, AppWindow::keyCallback);
+	glfwSetCursorPosCallback(_window, AppWindow::mousePosCallback);
+	glfwSetCursorEnterCallback(_window, AppWindow::mouseEnterCallback);
+
+	//Init GLAD
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+		glfwTerminate();
+	}
+
+	//Init stages
+	initStage();
+}
+
+void AppWindow::close() {
+	glfwSetWindowShouldClose(_window, true);
+}
 
 //STATIC CALLBACK FUNCTION
 //called when windows size has changed
 void AppWindow::framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
+}
+
+void AppWindow::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	if (action == GLFW_PRESS) {
+		currentWindow->_key[key] = true;
+	}
+	else if (action == GLFW_RELEASE) {
+		currentWindow->_key[key] = false;
+	}
+}
+
+void AppWindow::mousePosCallback(GLFWwindow * window, double x, double y) {
+	MouseEvent &e = currentWindow->getMouseEvent();
+	if (e._firstinput) {
+		e._firstinput = false;
+		e._offsetx = 0.0f;
+		e._offsety = 0.0f;
+	}
+	else {
+		e._offsetx = -(e._lastx - (float)x) * e._mouseSense;
+		e._offsety = (e._lasty - (float)y) * e._mouseSense;
+		e._dirty = true;
+	}
+	e._lastx = (float)x;
+	e._lasty = (float)y;
+}
+void AppWindow::mouseEnterCallback(GLFWwindow * window, int entered) {
+	MouseEvent &e = currentWindow->getMouseEvent();
+	e._firstinput = true;
 }

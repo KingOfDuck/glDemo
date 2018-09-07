@@ -3,6 +3,7 @@
 
 #define APPLICATION_NAME "glDemoTest"
 #define MAX_FRAME 120
+#define DEFAULT_MOUSE_SENSITIVITY 0.1f
 
 class AppWindow;
 class glDemoApp {

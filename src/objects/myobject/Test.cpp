@@ -1,5 +1,6 @@
 #include <glad/glad.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glfw/glfw3.h>
 
 #include "TestObject.h"
 #include "TestStage.h"
@@ -36,8 +37,37 @@ TestStage::TestStage(AppWindow *w) :
 	_objects.push_back(reinterpret_cast<Object*>(new TestObject(vertices, 32, this)));
 }
 
+void TestStage::_inputProcess() {
+	//Keyboards
+	bool* keys = _window->getKeys();
+	if (keys[GLFW_KEY_W]) {
+		_camera->moveFront((float)Time::DeltaTime());
+	}
+	else if (keys[GLFW_KEY_S]) {
+		_camera->moveFront((float)-Time::DeltaTime());
+	}
+
+	if (keys[GLFW_KEY_A]) {
+		_camera->moveLeft((float)Time::DeltaTime());
+	}
+	else if (keys[GLFW_KEY_D]) {
+		_camera->moveLeft(-(float)Time::DeltaTime());
+	}
+
+	if (keys[GLFW_KEY_ESCAPE]) {
+		_window->close();
+	}
+	//Mouse
+	const MouseEvent &e = _window->getMouseEvent();//Cannot be changed
+	if (e._dirty) {
+		_camera->rotate(e._offsety, e._offsetx);
+	}
+	
+}
 void TestStage::step() {
 	//Step is divided into two parts: prepare and draw
+	_inputProcess();
+
 	//Preparing the informations for drawing: status, movements, textures, lightlings, shaders, ...
 	for (auto i = _objects.begin(); i != _objects.end(); ++i) {
 		//TODO: Objects Movement
