@@ -33,6 +33,12 @@
     <ClInclude Include="lib\stb_image.h">
       <Filter>lib</Filter>
     </ClInclude>
+    <ClInclude Include="src\objects\light.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\objects\myobject\TestLight.h">
+      <Filter>objects\myobject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\glDemo.cpp" />
@@ -68,6 +74,9 @@
     <ClCompile Include="src\objects\drawobject.cpp">
       <Filter>objects</Filter>
     </ClCompile>
+    <ClCompile Include="src\objects\light.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="lib">
@@ -91,6 +100,9 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="shaders\triangle.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\lightcube.frag">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>

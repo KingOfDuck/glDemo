@@ -41,9 +41,12 @@ public:
 
 	//设置速度
 	inline void setSpeed(GLfloat s) { _speed = s; }
+	inline const glm::vec3& getPosition() {
+		return _pos;
+	}
 
 	//获取视图矩阵
-	inline glm::mat4& getViewMatrix() {
+	inline const glm::mat4& getViewMatrix() {
 		return _view;
 	}
 };

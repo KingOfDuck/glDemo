@@ -15,6 +15,9 @@ AppWindow::AppWindow():
 	_mouse._lastx = _mouse._lasty = 0.0f;
 	_mouse._mouseSense = DEFAULT_MOUSE_SENSITIVITY;
 	_mouse._offsetx = _mouse._offsety = 0.0f;
+	for (int i = 0; i < 8; ++i) {
+		_mouse._keys[i] = false;
+	}
 
 	for (int i = 0; i < 512; ++i) {
 		_key[i] = false;
@@ -80,6 +83,7 @@ void AppWindow::use() {
 	glfwSetKeyCallback(_window, AppWindow::keyCallback);
 	glfwSetCursorPosCallback(_window, AppWindow::mousePosCallback);
 	glfwSetCursorEnterCallback(_window, AppWindow::mouseEnterCallback);
+	glfwSetMouseButtonCallback(_window, AppWindow::mouseButtonCallback);
 
 	//Init GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -127,4 +131,14 @@ void AppWindow::mousePosCallback(GLFWwindow * window, double x, double y) {
 void AppWindow::mouseEnterCallback(GLFWwindow * window, int entered) {
 	MouseEvent &e = currentWindow->getMouseEvent();
 	e._firstinput = true;
+}
+
+void AppWindow::mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+	MouseEvent &e = currentWindow->getMouseEvent();
+	if (action == GLFW_PRESS) {
+		e._keys[button] = true;
+	}
+	else if (action == GLFW_RELEASE) {
+		e._keys[button] = false;
+	}
 }

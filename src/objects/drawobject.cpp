@@ -2,9 +2,14 @@
 #include "shader.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glad/glad.h>
 
 drawObject::drawObject(Stage *s):_direction(0.0f),_position(glm::vec3(0.0f,0.0f,0.0f)),
 	_model(glm::mat4(1.0f)),Object(s){
+	_vertices = NULL;
+	_nvert = 0;
+	glGenVertexArrays(1, &_vao);
+	glGenBuffers(1, &_vbo);
 }
 void drawObject::move(float x, float y, float z) {
 	_position.x += x;
@@ -38,5 +43,5 @@ void drawObject::scaleTo(float x, float y, float z) {
 }
 
 void drawObject::setTrans(const char* name) {
-	_shader->setMatrix(name, _model);
+	_shader->setParameter(name, _model);
 }

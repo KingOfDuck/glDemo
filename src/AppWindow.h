@@ -8,9 +8,14 @@ class Stage;
 struct MouseEvent {
 	float _lastx, _lasty;//mouse position
 	bool _firstinput;//first mouse input
+					 //if mouse leave the window or enter the window, firstinput = true
 	float _offsetx, _offsety;
-	float _mouseSense;//mouse sensitivity;
-	bool _dirty;//mouse moved;
+	float _mouseSense;//mouse sensitivity
+	
+	bool _dirty;//mouse moved
+	//if moved, dirty = true
+
+	bool _keys[8];//mouse button
 };
 
 class AppWindow {
@@ -34,8 +39,11 @@ private:
 	static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	static void mousePosCallback(GLFWwindow * window, double x, double y);
 	static void mouseEnterCallback(GLFWwindow * window, int entered);
-
-	void initStage();//Customize init stage, Must be overwritten
+	static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+	
+	//Customize init stage, Must be defined
+	//自定义stage初始化，必须手动定义
+	void initStage();
 public:
 	enum InitCode {
 		success,

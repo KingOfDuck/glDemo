@@ -16,8 +16,10 @@ private:
 public:
 	Shader(const char* vertex, const char* fragment);
 	void use();
-	void setInt(const char* name, int val);
-	void setMatrix(const char* name, glm::mat4 &matrix);
+	void setParameter(const char* name, int val);
+	void setParameter(const char* name, const glm::vec3 &color);
+	void setParameter(const char* name, const glm::mat4 &matrix);
+	void setParameter(const char* name, float val);
 	~Shader();
 private:
 	int compile(const char* filename, shadertype type);

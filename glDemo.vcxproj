@@ -134,6 +134,8 @@
     <ClInclude Include="src\AppWindow.h" />
     <ClInclude Include="src\glDemo.h" />
     <ClInclude Include="src\objects\camera.h" />
+    <ClInclude Include="src\objects\light.h" />
+    <ClInclude Include="src\objects\myobject\TestLight.h" />
     <ClInclude Include="src\objects\myobject\TestObject.h" />
     <ClInclude Include="src\objects\myobject\TestStage.h" />
     <ClInclude Include="src\objects\object.h" />
@@ -150,6 +152,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\objects\camera.cpp" />
     <ClCompile Include="src\objects\drawobject.cpp" />
+    <ClCompile Include="src\objects\light.cpp" />
     <ClCompile Include="src\objects\myobject\Test.cpp" />
     <ClCompile Include="src\objects\canvas.cpp" />
     <ClCompile Include="src\objects\shader.cpp" />
@@ -159,6 +162,7 @@
     <ClCompile Include="src\utils\time.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\lightcube.frag" />
     <None Include="shaders\triangle.frag" />
     <None Include="shaders\triangle.vert" />
   </ItemGroup>

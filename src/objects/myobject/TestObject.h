@@ -7,8 +7,6 @@
 
 class TestObject : drawObject {
 private:
-	float * _vertices;
-	int _nvert;
 	unsigned int * _indices;
 	int _nind;
 	float _angle;

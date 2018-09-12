@@ -56,14 +56,23 @@ Shader::Shader(const char* vertex, const char* fragment) {
 void Shader::use() {
 	glUseProgram(_id);
 }
-void Shader::setInt(const char* name, int val) {
+void Shader::setParameter(const char* name, int val) {
 	int l = glGetUniformLocation(_id, name);
 	glUniform1i(l, val);
 }
-void Shader::setMatrix(const char* name, glm::mat4 &m) {
+void Shader::setParameter(const char* name, const glm::mat4 &m) {
 	int l = glGetUniformLocation(_id, name);
 	glUniformMatrix4fv(l, 1, GL_FALSE, glm::value_ptr(m));
 }
+void Shader::setParameter(const char* name, const glm::vec3 &v) {
+	int l = glGetUniformLocation(_id, name);
+	glUniform3fv(l, 1, &v[0]);
+}
+void Shader::setParameter(const char* name, float a) {
+	int l = glGetUniformLocation(_id, name);
+	glUniform1f(l, a);
+}
+
 //使用int，出错用负数，未出错用正数
 int Shader::compile(const char* filename, shadertype type) {
 	std::ifstream file(filename);
