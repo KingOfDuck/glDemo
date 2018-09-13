@@ -5,11 +5,12 @@
 #include "TestObject.h"
 #include "TestStage.h"
 #include "TestLight.h"
-#include "../../AppWindow.h"
-#include "../camera.h"
-#include "../shader.h"
-#include "../texture.h"
-#include "../../utils/time.h"
+#include "../AppWindow.h"
+#include "../stage/camera.h"
+#include "../object/properties/shader.h"
+#include "../object/properties/texture.h"
+#include "../utils/time.h"
+#include "../object/properties/material.h"
 
 
 float vertices[] = {
@@ -136,13 +137,18 @@ void TestStage::draw() {
 TestObject::TestObject(float*vertices, int nvert, Stage* s):drawObject(s) {
 	_vertices = vertices;
 	_nvert = nvert;
-	_shader = new Shader("shaders/triangle.vert","shaders/triangle.frag");
-	_stage = s;
+	_shader = new Shader("res/shaders/triangle.vert","res/shaders/triangle.frag");
+	_material = new Material();
+	_material->setAmbient(1.0f, 0.5f, 0.31f);
+	_material->setDiffuse(1.0f, 0.5f, 0.31f);
+	_material->setSpecular(0.5f, 0.5f, 0.5f);
+	_material->setShininess(0.4f);
 	init();
 };
 
 void TestObject::init() {
 	bindBuffer();
+	moveTo(1.3f, -0.5f, 0.4f);
 }
 void TestObject::bindBuffer() {
 	glBindVertexArray(_vao);
@@ -161,15 +167,19 @@ void TestObject::step() {
 
 void TestObject::draw() {
 	_shader->use();
-	_shader->setParameter("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
 	_shader->setParameter("viewPos", _stage->getViewPoint());
-	_shader->setParameter("specularStrenth", 0.5f);
+	_shader->setParameter("material.ambient", _material->getAmbient());
+	_shader->setParameter("material.diffuse", _material->getDiffuse());
+	_shader->setParameter("material.specular", _material->getSpecular());
+	_shader->setParameter("material.shininess", _material->getShininess());
+
 	if (_stage->getAmbientLight() != NULL) {
-		_shader->setParameter("lightColor", _stage->getAmbientLight()->getLightColor());
-		_shader->setParameter("ambientStrength", _stage->getAmbientLight()->getAmbientStrength());
-		_shader->setParameter("lightPos", _stage->getAmbientLight()->getPosition());
+		_shader->setParameter("light.color", _stage->getAmbientLight()->getLightColor());
+		_shader->setParameter("light.ambient", _stage->getAmbientLight()->getLightColor() * glm::vec3(0.2f));
+		_shader->setParameter("light.diffuse", _stage->getAmbientLight()->getLightColor() * glm::vec3(0.5f));
+		_shader->setParameter("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
+		_shader->setParameter("light.position", _stage->getAmbientLight()->getPosition());
 	}
-	
 
 	_shader->setParameter("projection", _stage->getProjection());
 	_shader->setParameter("view", _stage->getView());
@@ -194,7 +204,7 @@ TestLight::TestLight(float *vertices, int nvert, Stage *s) :Light(vertices, nver
 }
 
 void TestLight::init() {
-	_shader = new Shader("shaders/triangle.vert", "shaders/lightcube.frag");
+	_shader = new Shader("res/shaders/triangle.vert", "res/shaders/lightcube.frag");
 	_lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
 	moveTo(1.2f, 1.0f, 2.0f);
 	scale(0.2f, 0.2f, 0.2f);
@@ -207,6 +217,9 @@ void TestLight::init() {
 }
 
 void TestLight::step() {
+	_lightColor.x = sin((float)Time::GetTime() * 2.0f);
+	_lightColor.y = sin((float)Time::GetTime() * 0.7f);
+	_lightColor.z = sin((float)Time::GetTime() * 1.3f);
 }
 
 void TestLight::draw() {

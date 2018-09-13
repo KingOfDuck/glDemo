@@ -1,7 +1,7 @@
 #ifndef __TESTOBJECT_H
 #define __TESTOBJECT_H
 
-#include "../object.h"
+#include "../object/object.h"
 #include <glm/vec3.hpp>
 #include <vector>
 

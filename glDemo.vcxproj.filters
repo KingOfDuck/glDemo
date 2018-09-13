@@ -3,41 +3,47 @@
   <ItemGroup>
     <ClInclude Include="src\glDemo.h" />
     <ClInclude Include="src\AppWindow.h" />
-    <ClInclude Include="src\objects\object.h">
-      <Filter>objects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\objects\stage.h">
-      <Filter>objects</Filter>
-    </ClInclude>
     <ClInclude Include="src\utils\log.h">
       <Filter>utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\objects\camera.h">
-      <Filter>objects</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\time.h">
       <Filter>utils</Filter>
     </ClInclude>
-    <ClInclude Include="src\objects\myobject\TestStage.h">
-      <Filter>objects\myobject</Filter>
-    </ClInclude>
-    <ClInclude Include="src\objects\myobject\TestObject.h">
-      <Filter>objects\myobject</Filter>
-    </ClInclude>
-    <ClInclude Include="src\objects\shader.h">
-      <Filter>objects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\objects\texture.h">
-      <Filter>objects</Filter>
-    </ClInclude>
     <ClInclude Include="lib\stb_image.h">
       <Filter>lib</Filter>
     </ClInclude>
-    <ClInclude Include="src\objects\light.h">
-      <Filter>objects</Filter>
+    <ClInclude Include="src\stage\camera.h">
+      <Filter>stage</Filter>
     </ClInclude>
-    <ClInclude Include="src\objects\myobject\TestLight.h">
-      <Filter>objects\myobject</Filter>
+    <ClInclude Include="src\stage\stage.h">
+      <Filter>stage</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object\light.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object\object.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object\properties\shader.h">
+      <Filter>object\properties</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object\properties\texture.h">
+      <Filter>object\properties</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object\properties\material.h">
+      <Filter>object\properties</Filter>
+    </ClInclude>
+    <ClInclude Include="src\myobject\TestLight.h">
+      <Filter>myobject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\myobject\TestObject.h">
+      <Filter>myobject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\myobject\TestStage.h">
+      <Filter>myobject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\ExData.h">
+      <Filter>utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -53,29 +59,35 @@
     <ClCompile Include="src\utils\time.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\myobject\Test.cpp">
-      <Filter>objects\myobject</Filter>
+    <ClCompile Include="src\stage\camera.cpp">
+      <Filter>stage</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\stage.cpp">
-      <Filter>objects</Filter>
+    <ClCompile Include="src\stage\stage.cpp">
+      <Filter>stage</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\camera.cpp">
-      <Filter>objects</Filter>
+    <ClCompile Include="src\object\canvas.cpp">
+      <Filter>object</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\shader.cpp">
-      <Filter>objects</Filter>
+    <ClCompile Include="src\object\drawobject.cpp">
+      <Filter>object</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\texture.cpp">
-      <Filter>objects</Filter>
+    <ClCompile Include="src\object\light.cpp">
+      <Filter>object</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\canvas.cpp">
-      <Filter>objects</Filter>
+    <ClCompile Include="src\object\properties\shader.cpp">
+      <Filter>object\properties</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\drawobject.cpp">
-      <Filter>objects</Filter>
+    <ClCompile Include="src\object\properties\texture.cpp">
+      <Filter>object\properties</Filter>
     </ClCompile>
-    <ClCompile Include="src\objects\light.cpp">
-      <Filter>objects</Filter>
+    <ClCompile Include="src\myobject\Test.cpp">
+      <Filter>myobject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object\properties\material.cpp">
+      <Filter>object\properties</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\ExData.cpp">
+      <Filter>utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -85,25 +97,34 @@
     <Filter Include="utils">
       <UniqueIdentifier>{da25b20c-cf60-4711-bb4e-20516e9f4dd2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="objects">
+    <Filter Include="stage">
+      <UniqueIdentifier>{3b535e14-a436-4c71-96c7-2e202b5d8642}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="object">
       <UniqueIdentifier>{b10b414a-c2a1-4d22-a8ec-1d19209cfc68}</UniqueIdentifier>
     </Filter>
-    <Filter Include="objects\myobject">
-      <UniqueIdentifier>{9114a828-9f62-478f-a742-d1add7966598}</UniqueIdentifier>
+    <Filter Include="object\properties">
+      <UniqueIdentifier>{0034181a-6f21-4f1f-99e6-6bd1ed6d6615}</UniqueIdentifier>
     </Filter>
-    <Filter Include="shaders">
-      <UniqueIdentifier>{174782c5-a37a-4fe6-926b-ac7406ac7e2c}</UniqueIdentifier>
+    <Filter Include="myobject">
+      <UniqueIdentifier>{3e216b9f-3501-4731-9e35-6e37fbe8cc5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{14f29e2b-8d62-4a2b-a8c4-8486ab1821f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\shaders">
+      <UniqueIdentifier>{36058cc8-75f0-4811-863d-5c267c81f984}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\triangle.vert">
-      <Filter>shaders</Filter>
+    <None Include="res\shaders\lightcube.frag">
+      <Filter>res\shaders</Filter>
     </None>
-    <None Include="shaders\triangle.frag">
-      <Filter>shaders</Filter>
+    <None Include="res\shaders\triangle.frag">
+      <Filter>res\shaders</Filter>
     </None>
-    <None Include="shaders\lightcube.frag">
-      <Filter>shaders</Filter>
+    <None Include="res\shaders\triangle.vert">
+      <Filter>res\shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

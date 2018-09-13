@@ -1,7 +1,7 @@
 #ifndef __TESTSTAGE_H
 #define __TESTSTAGE_H
 
-#include "../stage.h"
+#include "../stage/stage.h"
 
 class TestStage :public Stage {
 public:

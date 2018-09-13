@@ -1,7 +1,7 @@
 #include "AppWindow.h"
 #include "glDemo.h"
 #include "utils/time.h"
-#include "objects/stage.h"
+#include "stage/stage.h"
 
 #include <glad/glad.h>
 #include <glfw/glfw3.h>

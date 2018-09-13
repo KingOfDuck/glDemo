@@ -1,7 +1,7 @@
 #include "stage.h"
 #include "camera.h"
-#include "object.h"
-#include "light.h"
+#include "../object/object.h"
+#include "../object/light.h"
 #include <glm/gtc/matrix_transform.hpp>
 
 Stage::Stage(AppWindow *w):

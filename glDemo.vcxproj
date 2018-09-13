@@ -133,15 +133,17 @@
     <ClInclude Include="lib\stb_image.h" />
     <ClInclude Include="src\AppWindow.h" />
     <ClInclude Include="src\glDemo.h" />
-    <ClInclude Include="src\objects\camera.h" />
-    <ClInclude Include="src\objects\light.h" />
-    <ClInclude Include="src\objects\myobject\TestLight.h" />
-    <ClInclude Include="src\objects\myobject\TestObject.h" />
-    <ClInclude Include="src\objects\myobject\TestStage.h" />
-    <ClInclude Include="src\objects\object.h" />
-    <ClInclude Include="src\objects\shader.h" />
-    <ClInclude Include="src\objects\stage.h" />
-    <ClInclude Include="src\objects\texture.h" />
+    <ClInclude Include="src\myobject\TestLight.h" />
+    <ClInclude Include="src\myobject\TestObject.h" />
+    <ClInclude Include="src\myobject\TestStage.h" />
+    <ClInclude Include="src\object\light.h" />
+    <ClInclude Include="src\object\object.h" />
+    <ClInclude Include="src\object\properties\material.h" />
+    <ClInclude Include="src\object\properties\shader.h" />
+    <ClInclude Include="src\object\properties\texture.h" />
+    <ClInclude Include="src\stage\camera.h" />
+    <ClInclude Include="src\stage\stage.h" />
+    <ClInclude Include="src\utils\ExData.h" />
     <ClInclude Include="src\utils\log.h" />
     <ClInclude Include="src\utils\time.h" />
   </ItemGroup>
@@ -150,21 +152,23 @@
     <ClCompile Include="src\AppWindow.cpp" />
     <ClCompile Include="src\glDemo.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\objects\camera.cpp" />
-    <ClCompile Include="src\objects\drawobject.cpp" />
-    <ClCompile Include="src\objects\light.cpp" />
-    <ClCompile Include="src\objects\myobject\Test.cpp" />
-    <ClCompile Include="src\objects\canvas.cpp" />
-    <ClCompile Include="src\objects\shader.cpp" />
-    <ClCompile Include="src\objects\stage.cpp" />
-    <ClCompile Include="src\objects\texture.cpp" />
+    <ClCompile Include="src\myobject\Test.cpp" />
+    <ClCompile Include="src\object\canvas.cpp" />
+    <ClCompile Include="src\object\drawobject.cpp" />
+    <ClCompile Include="src\object\light.cpp" />
+    <ClCompile Include="src\object\properties\material.cpp" />
+    <ClCompile Include="src\object\properties\shader.cpp" />
+    <ClCompile Include="src\object\properties\texture.cpp" />
+    <ClCompile Include="src\stage\camera.cpp" />
+    <ClCompile Include="src\stage\stage.cpp" />
+    <ClCompile Include="src\utils\ExData.cpp" />
     <ClCompile Include="src\utils\log.cpp" />
     <ClCompile Include="src\utils\time.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\lightcube.frag" />
-    <None Include="shaders\triangle.frag" />
-    <None Include="shaders\triangle.vert" />
+    <None Include="res\shaders\lightcube.frag" />
+    <None Include="res\shaders\triangle.frag" />
+    <None Include="res\shaders\triangle.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

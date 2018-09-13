@@ -1,7 +1,7 @@
 #ifndef __TESTLIGHT_H
 #define __TESTLIGHT_H
 
-#include "../light.h"
+#include "../object/light.h"
 
 class TestLight : public Light {
 private:

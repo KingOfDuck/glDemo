@@ -1,6 +1,7 @@
 #include "glDemo.h"
 #include "AppWindow.h"
 #include "utils/log.h"
+#include "utils/ExData.h"
 
 #include<iostream>
 
@@ -17,6 +18,8 @@ glDemoApp::~glDemoApp() {
 int glDemoApp::init() {
 	//Init Log
 	Log::initMessage();
+	//Init External Data
+	ExData::init();	
 
 	//Init a window
 	_window = new AppWindow();

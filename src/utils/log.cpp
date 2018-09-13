@@ -8,6 +8,7 @@ void Log::initMessage() {
 	_transMes[GLDEMO_MES_TIP] = "[LOG] ";
 	_transMes[GLDEMO_MES_NOT_EXIST] = "Message do not exist:";
 	_transMes[GLDEMO_MES_WINDOW_INIT_FAIL] = "Fail to initialize window.";
+	_transMes[EXDATA_FILE_NOT_EXIST_MATERIAL] = "Cannot open external material data.";
 }
 
 void Log::log(int mes) {
