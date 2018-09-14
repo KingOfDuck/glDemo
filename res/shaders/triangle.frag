@@ -1,12 +1,13 @@
 #version 330 core
 struct Material{
 	vec3 ambient;
-	vec3 diffuse;
-	vec3 specular;
+	sampler2D diffuse;
+	sampler2D specular;
 	float shininess;//0.0f-128.0f
 };
 struct Light{
-	vec3 position;
+	//vec3 position;
+	vec3 direction;
 	vec3 ambient;
 	vec3 diffuse;
 	vec3 specular;
@@ -21,6 +22,7 @@ uniform Light light;//光照
 
 in vec3 Normal;
 in vec3 pos;
+in vec2 TexCoords;
 
 void main()
 {
@@ -28,7 +30,8 @@ void main()
 
 	//计算光源到该点的方向向量（向量减法）
 	vec3 norm = normalize(Normal);//正交化法向量
-	vec3 lightDir = normalize(light.position - pos);//正交化方向向量
+	//vec3 lightDir = normalize(light.position - pos);//正交化方向向量
+	vec3 lightDir = normalize(-light.direction);
 	//计算漫反射
 	float diff = max(dot(norm, lightDir), 0.0);//点乘，漫反射光强度
 
@@ -39,8 +42,9 @@ void main()
 	//计算镜面分量
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
 
-	vec3 result = light.diffuse * (diff * material.diffuse) + light.ambient * material.ambient\
-		+ light.specular * (spec * material.specular);
+	vec3 result = light.diffuse * (diff * vec3(texture(material.diffuse,TexCoords))) + \
+		light.ambient * vec3(texture(material.diffuse, TexCoords)) + \
+		light.specular * (spec * vec3(texture(material.specular,TexCoords)));
 
     FragColor = vec4(result, 1.0);
 }

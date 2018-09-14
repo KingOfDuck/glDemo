@@ -14,47 +14,60 @@
 
 
 float vertices[] = {
-	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	// positions          // normals           // texture coords
+	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
+	0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
+	0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+	0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
 
-	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-	0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-	0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-	0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
+	0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 0.0f,
+	0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
+	0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
 
-	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-	-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-	-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
 
-	0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-	0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-	0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-	0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-	0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-	0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+	0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+	0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+	0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+	0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+	0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+	0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
 
-	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-	0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-	0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-	0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
+	0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
+	0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+	0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
 
-	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-	0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-	0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-	0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
+	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
+	0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
+	0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+	0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
+};
+glm::vec3 cubePositions[] = {
+	glm::vec3(0.0f,  0.0f,  0.0f),
+	glm::vec3(2.0f,  5.0f, -15.0f),
+	glm::vec3(-1.5f, -2.2f, -2.5f),
+	glm::vec3(-3.8f, -2.0f, -12.3f),
+	glm::vec3(2.4f, -0.4f, -3.5f),
+	glm::vec3(-1.7f,  3.0f, -7.5f),
+	glm::vec3(1.3f, -2.0f, -2.5f),
+	glm::vec3(1.5f,  2.0f, -2.5f),
+	glm::vec3(1.5f,  0.2f, -1.5f),
+	glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
 void AppWindow::initStage() {
@@ -70,8 +83,14 @@ TestStage::TestStage(AppWindow *w) :
 	_camera = new Camera();
 	setPerspective(45.0f, (float)w->getClientWidth() / (float)w->getClientHeight(), 0.1f, 100.0f);
 	
-	_lights.push_back(new TestLight(vertices, 216, this));
-	_objects.push_back(reinterpret_cast<Object*>(new TestObject(vertices, 216, this)));
+	_lights.push_back(new TestLight(vertices, 288, this));
+	for (int i = 0; i < 10; ++i) {
+		TestObject* t = new TestObject(vertices, 288, this);
+		t->moveTo(cubePositions[i].x,cubePositions[i].y,cubePositions[i].z);
+		float angle = 20.0f * i;
+		t->rotate(angle, glm::vec3(1.0f, 0.3f, 0.5f));
+		_objects.push_back(t);
+	}
 
 	setAmbient(0, 0.1f);
 }
@@ -139,38 +158,29 @@ TestObject::TestObject(float*vertices, int nvert, Stage* s):drawObject(s) {
 	_nvert = nvert;
 	_shader = new Shader("res/shaders/triangle.vert","res/shaders/triangle.frag");
 	_material = new Material();
-	_material->setAmbient(1.0f, 0.5f, 0.31f);
-	_material->setDiffuse(1.0f, 0.5f, 0.31f);
-	_material->setSpecular(0.5f, 0.5f, 0.5f);
-	_material->setShininess(0.4f);
+	_texture.push_back(new Texture("res/textures/container2.png", GL_RGBA));
+	_texture.push_back(new Texture("res/textures/container2_specular.png", GL_RGBA));
+	_material->setShininess(0.1f);
 	init();
 };
 
 void TestObject::init() {
 	bindBuffer();
-	moveTo(1.3f, -0.5f, 0.4f);
 }
 void TestObject::bindBuffer() {
-	glBindVertexArray(_vao);
-	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*_nvert, _vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-	glBindVertexArray(0);
-	_shader->use();
+	int groups[] = { 3,3,2 };
+	setVerticesFormatf(3, groups);
 }
 
 void TestObject::step() {
 }
 
-void TestObject::draw() {
+void TestObject::paint() {
 	_shader->use();
 	_shader->setParameter("viewPos", _stage->getViewPoint());
 	_shader->setParameter("material.ambient", _material->getAmbient());
-	_shader->setParameter("material.diffuse", _material->getDiffuse());
-	_shader->setParameter("material.specular", _material->getSpecular());
+	_shader->setParameter("material.diffuse", 0);
+	_shader->setParameter("material.specular", 1);
 	_shader->setParameter("material.shininess", _material->getShininess());
 
 	if (_stage->getAmbientLight() != NULL) {
@@ -178,15 +188,17 @@ void TestObject::draw() {
 		_shader->setParameter("light.ambient", _stage->getAmbientLight()->getLightColor() * glm::vec3(0.2f));
 		_shader->setParameter("light.diffuse", _stage->getAmbientLight()->getLightColor() * glm::vec3(0.5f));
 		_shader->setParameter("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-		_shader->setParameter("light.position", _stage->getAmbientLight()->getPosition());
+		_shader->setParameter("light.direction", glm::vec3(-0.2f,-1.0f,-0.3f));
 	}
 
 	_shader->setParameter("projection", _stage->getProjection());
 	_shader->setParameter("view", _stage->getView());
 	_shader->setParameter("model", _model);
-	glBindVertexArray(_vao);
+
+	_texture[0]->use(GL_TEXTURE0);
+	_texture[1]->use(GL_TEXTURE1);
+
 	glDrawArrays(GL_TRIANGLES, 0, _nvert);
-	glBindVertexArray(0);
 }
 
 void TestObject::setIndices(unsigned int* indices, int nind) {
@@ -208,27 +220,20 @@ void TestLight::init() {
 	_lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
 	moveTo(1.2f, 1.0f, 2.0f);
 	scale(0.2f, 0.2f, 0.2f);
-	glBindVertexArray(_vao);
-	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 180, vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	glBindVertexArray(0);
+	int groups[] = { 3,3,2 };
+	setVerticesFormatf(3, groups);
 }
 
 void TestLight::step() {
-	_lightColor.x = sin((float)Time::GetTime() * 2.0f);
-	_lightColor.y = sin((float)Time::GetTime() * 0.7f);
-	_lightColor.z = sin((float)Time::GetTime() * 1.3f);
+	//_lightColor.x = sin((float)Time::GetTime() * 2.0f);
+	//_lightColor.y = sin((float)Time::GetTime() * 0.7f);
+	//_lightColor.z = sin((float)Time::GetTime() * 1.3f);
 }
 
-void TestLight::draw() {
+void TestLight::paint() {
 	_shader->use();
 	_shader->setParameter("projection", _stage->getProjection());
 	_shader->setParameter("view", _stage->getView());
 	_shader->setParameter("model", _model);
-
-	glBindVertexArray(_vao);
 	glDrawArrays(GL_TRIANGLES, 0, _nvert);
-	glBindVertexArray(0);
 }

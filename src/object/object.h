@@ -21,7 +21,7 @@ private:
 };
 
 //Canvas, background
-class Canvas:Object{
+class Canvas: public Object{
 private:
 	float _red, _green, _blue, _alpha;
 public:
@@ -67,15 +67,13 @@ public:
 	drawObject(Stage* s);
 	~drawObject();
 
-	virtual void draw() = 0;
+	void draw();
 	virtual void step() = 0;
-	
+
 	inline unsigned int getVBO() { return _vbo; }
 	inline unsigned int getVAO() { return _vao; }
 	inline const glm::vec3& getPosition() { return _position; }
 
-	//Unused
-	void setTrans(const char* parameterName);
 	//移动
 	void move(float x, float y, float z);
 	//移动至
@@ -84,12 +82,26 @@ public:
 	void rotate(float zdegree);
 	//只允许旋转z轴
 	void rotateTo(float zdegree);
+	//开放旋转
+	void rotate(float degree, const glm::vec3&axis);
 	//缩放
 	void scale(float x, float y, float z);
 	//缩放至
 	void scaleTo(float x, float y, float z);
 	//配置shader
 	void setShader(Shader* s) { _shader = s; }
+
+protected:
+	//设置顶点格式
+	//@oneLineFormat 每一行格式说明，例如：2 2 3表示一行有2+2+3=7个数据
+	//	且分为2，2，3三组
+	void setVerticesFormatf(std::vector<int> oneLineFormat);
+	void setVerticesFormatf(int number, int* groups);
+
+	//设置索引格式
+	void setIndicesFormat();
+
+	virtual void paint() = 0;
 private:
 	drawObject();
 };

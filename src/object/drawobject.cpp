@@ -1,5 +1,6 @@
 #include "object.h"
 #include "properties/shader.h"
+#include "properties/material.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glad/glad.h>
@@ -19,6 +20,49 @@ drawObject::~drawObject() {
 	if (_ebo >= 0) {
 		glDeleteBuffers(1, &_ebo);
 	}
+	if (_material)
+		delete _material;
+}
+
+void drawObject::draw() {
+	glBindVertexArray(_vao);
+	this->paint();
+	glBindVertexArray(0);
+}
+
+void drawObject::setVerticesFormatf(std::vector<int> oneLineFormat) {
+	glBindVertexArray(_vao);
+	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*_nvert, _vertices, GL_STATIC_DRAW);
+
+	int sum = 0;
+	for (int i = 0; i < oneLineFormat.size(); ++i) {
+		sum += oneLineFormat[i];
+	}
+
+	int total = 0;
+	for (int i = 0; i < oneLineFormat.size(); ++i) {
+		glVertexAttribPointer(i, oneLineFormat[i], GL_FLOAT, GL_FALSE, sum * sizeof(float), (void*)(total*sizeof(float)));
+		total += oneLineFormat[i];
+		glEnableVertexAttribArray(i);
+	}
+	glBindVertexArray(0);
+}
+void drawObject::setVerticesFormatf(int number, int* groups) {
+	glBindVertexArray(_vao);
+	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)*_nvert, _vertices, GL_STATIC_DRAW);
+	int sum = 0;
+	for (int i = 0; i < number; ++i) {
+		sum += groups[i];
+	}
+	int total = 0;
+	for (int i = 0; i < number; ++i) {
+		glVertexAttribPointer(i, groups[i], GL_FLOAT, GL_FALSE, sum * sizeof(float), (void*)(total*sizeof(float)));
+		glEnableVertexAttribArray(i);
+		total += groups[i];
+	}
+	glBindVertexArray(0);
 }
 
 void drawObject::move(float x, float y, float z) {
@@ -52,6 +96,6 @@ void drawObject::scaleTo(float x, float y, float z) {
 	_model = glm::scale(glm::mat4(1.0f), glm::vec3(x, y, z));
 }
 
-void drawObject::setTrans(const char* name) {
-	_shader->setParameter(name, _model);
+void drawObject::rotate(float degree, const glm::vec3&axis) {
+	_model = glm::rotate(_model,glm::radians(degree),axis);
 }

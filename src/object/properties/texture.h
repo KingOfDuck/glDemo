@@ -11,8 +11,9 @@ public:
 	//使用文件名和颜色格式初始化纹理
 	Texture(const char* filename, int format);
 
-	//使用纹理
-	void use();
+	//使用为X号纹理
+	//ID应为GL_TEXTUREXX
+	void use(int id);
 
 	~Texture();
 private:

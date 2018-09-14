@@ -7,7 +7,7 @@ class TestLight : public Light {
 private:
 public:
 	TestLight(float* vertices = NULL, int nvert = 0, Stage *s = NULL);
-	void draw();
+	void paint();
 	void step();
 	void init();
 private:

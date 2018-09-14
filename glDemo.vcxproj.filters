@@ -97,9 +97,6 @@
     <Filter Include="utils">
       <UniqueIdentifier>{da25b20c-cf60-4711-bb4e-20516e9f4dd2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="stage">
-      <UniqueIdentifier>{3b535e14-a436-4c71-96c7-2e202b5d8642}</UniqueIdentifier>
-    </Filter>
     <Filter Include="object">
       <UniqueIdentifier>{b10b414a-c2a1-4d22-a8ec-1d19209cfc68}</UniqueIdentifier>
     </Filter>
@@ -114,6 +111,9 @@
     </Filter>
     <Filter Include="res\shaders">
       <UniqueIdentifier>{36058cc8-75f0-4811-863d-5c267c81f984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stage">
+      <UniqueIdentifier>{3b535e14-a436-4c71-96c7-2e202b5d8642}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -23,7 +23,8 @@ Texture::Texture(const char* filename, int format) {
 	stbi_image_free(data);
 }
 
-void Texture::use() {
+void Texture::use(int glid) {
+	glActiveTexture(glid);
 	glBindTexture(GL_TEXTURE_2D, _id);
 }
 

@@ -28,9 +28,9 @@ public:
 	inline bool isAmbient() { return _ambient == 0.0f; }
 	inline float getAmbientStrength() { return _ambient; }
 	inline glm::vec3& getLightColor() { return _lightColor; }
-	
-	virtual void draw() = 0;
+
 	virtual void step() = 0;
+	virtual void paint() = 0;
 private:
 	Light();
 };
