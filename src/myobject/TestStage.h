@@ -6,8 +6,8 @@
 class TestStage :public Stage {
 public:
 	TestStage(AppWindow* w);
-	void step();
-	void draw();
+	void loop();
+	void paint();
 private:
 	TestStage();
 	TestStage(TestStage&); 

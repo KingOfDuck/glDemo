@@ -137,6 +137,8 @@
     <ClInclude Include="src\myobject\TestObject.h" />
     <ClInclude Include="src\myobject\TestStage.h" />
     <ClInclude Include="src\object\light.h" />
+    <ClInclude Include="src\object\manager\LightManager.h" />
+    <ClInclude Include="src\object\manager\ShaderManager.h" />
     <ClInclude Include="src\object\object.h" />
     <ClInclude Include="src\object\properties\material.h" />
     <ClInclude Include="src\object\properties\shader.h" />
@@ -156,6 +158,8 @@
     <ClCompile Include="src\object\canvas.cpp" />
     <ClCompile Include="src\object\drawobject.cpp" />
     <ClCompile Include="src\object\light.cpp" />
+    <ClCompile Include="src\object\manager\LightManager.cpp" />
+    <ClCompile Include="src\object\manager\ShaderManager.cpp" />
     <ClCompile Include="src\object\properties\material.cpp" />
     <ClCompile Include="src\object\properties\shader.cpp" />
     <ClCompile Include="src\object\properties\texture.cpp" />
@@ -166,8 +170,9 @@
     <ClCompile Include="src\utils\time.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\shaders\defaultObject.frag" />
+    <None Include="res\shaders\defaultObject.vert" />
     <None Include="res\shaders\lightcube.frag" />
-    <None Include="res\shaders\triangle.frag" />
     <None Include="res\shaders\triangle.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

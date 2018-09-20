@@ -44,7 +44,9 @@ public:
 	inline const glm::vec3& getPosition() {
 		return _pos;
 	}
-
+	inline const glm::vec3& getDirection() {
+		return _front;
+	}
 	//ªÒ»° ”Õºæÿ’Û
 	inline const glm::mat4& getViewMatrix() {
 		return _view;

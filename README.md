@@ -11,4 +11,8 @@ Sean T. Barrett's single-file Image Library: [stb_image](https://github.com/noth
 >2018/09/13   
 >项目文件结构重组，添加[材质数据](http://devernay.free.fr/cours/opengl/materials.html)  
 >2018/09/14  
->平行光源
+>平行光源  
+>2018/09/20  
+>新增光照管理，着色器管理  
+>重写光照，着色器  
+>多光源

@@ -52,23 +52,26 @@ protected:
 	unsigned int _ebo;//数组索引，可选
 	float * _vertices;//顶点数据
 	int _nvert;//顶点个数
+	std::vector<int> _format;//顶点排列格式
 
 	//Geometric
 	glm::vec3 _position;//位置，初始在原点
-	float _direction;//方向，初始为0
+	glm::vec3 _scale;//缩放，初始为1
+	glm::vec3 _rotate;//物体朝向，初始为0
 	glm::mat4 _model;//模型视图矩阵，初始化为单位矩阵
 
 	//Properties
-	Material* _material;//材质，可选（光照无材质）
 	Shader* _shader;//着色器，必须
+	Material* _material;//材质，可选（光照无材质）
 	std::vector<Texture*> _texture;//纹理，可选
 	
 public:
-	drawObject(Stage* s);
+	drawObject(float*vertices, int nvert, Stage* s);
 	~drawObject();
 
 	void draw();
 	virtual void step() = 0;
+	virtual void paint() = 0;
 
 	inline unsigned int getVBO() { return _vbo; }
 	inline unsigned int getVAO() { return _vao; }
@@ -101,7 +104,6 @@ protected:
 	//设置索引格式
 	void setIndicesFormat();
 
-	virtual void paint() = 0;
 private:
 	drawObject();
 };

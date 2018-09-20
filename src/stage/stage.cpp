@@ -6,7 +6,7 @@
 
 Stage::Stage(AppWindow *w):
 	_window(w),_camera(new Camera()),_canvas(new Canvas()),
-	_projection(glm::mat4(1.0f)),_indexAmbientLight(-1){
+	_projection(glm::mat4(1.0f)){
 }
 
 Stage::~Stage() {
@@ -25,28 +25,31 @@ const glm::mat4& Stage::getView(){
 const glm::vec3& Stage::getViewPoint() {
 	return _camera->getPosition();
 }
+const glm::vec3& Stage::getViewDir() {
+	return _camera->getDirection();
+}
 
 void Stage::setPerspective(float fov, float ar, float n, float f) {
 	_projection = glm::perspective(fov,ar,n,f);
 }
+
 void Stage::draw() {
 	glEnable(GL_DEPTH_TEST);
 	_canvas->draw();
 	_camera->step();
-}
-
-void Stage::setAmbient(int n, float strength) {
-	_lights[n]->setAmbient(true, strength);
-	_indexAmbientLight = n;
-}
-
-void Stage::setAmbient(Light *l, float strength) {
-	for (int i = 0; i < _lights.size(); ++i) {
-		if (_lights[i] == l) {
-			_lights[i]->setAmbient(true, strength);
-			_indexAmbientLight = i;
-			return;
-		}
+	_lightmanager.draw();
+	for (auto i = _objects.begin(); i != _objects.end(); ++i) {
+		(*i)->draw();
 	}
-	//LOG WARNING: Can not find light in the stage
+
+	this->paint();
+}
+void Stage::step() {
+	this->loop();
+
+	_lightmanager.step();
+	for (auto i = _objects.begin(); i != _objects.end(); ++i) {
+		//TODO: Objects Movement
+		(*i)->step();
+	}
 }

@@ -1,56 +1,29 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "shader.h"
+#include "../manager/ShaderManager.h"
+#include "../light.h"
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <string>
 
-//一个Shader必须同时有两个着色器，不使用默认着色器
-Shader::Shader(const char* vertex, const char* fragment) {
-	int vs, fs;
+//一个Shader必须同时有顶点、片段两个着色器
 
-	std::string t;
-	t = vertex;
-	if (t.find(".vert") != std::string::npos) {
-		vs = compile(vertex, shadertype::vertex);
-	}
-	else {
-		_success = SHADER_ERROR_FILENAME;
-		return;
-	}
-
-	if (vs == -1) {
-		_success = SHADER_VERT_COMPILE_ERROR;
-		return;
-	}
-
-	t = fragment;
-	if (t.find(".frag")!= std::string::npos) {
-		fs = compile(fragment, shadertype::fragment);
-	}
-	else {
-		_success = SHADER_ERROR_FILENAME;
-		return;
-	}
-	if (fs == -1) {
-		_success = SHADER_FRAG_COMPILE_ERROR;
-		return;
-	}
-
-
-	_id = glCreateProgram();
-	glAttachShader(_id, vs);
-	glAttachShader(_id, fs);
-	glLinkProgram(_id);
-	glGetProgramiv(_id, GL_LINK_STATUS, &_success);
-	if (!_success) {
-		_info = (char*)calloc(512, sizeof(char));
-		glGetProgramInfoLog(_id, 512, NULL, _info);
-		std::cout << _info << std::endl;
-		return;
-	}
-	glDeleteShader(vs);
-	glDeleteShader(fs);
+//private 构造，copy()使用
+Shader::Shader():_id(-1){
+}
+Shader::Shader(const char* vertex, const char* fragment){
+	loadFromFile(vertex, fragment);
+}
+void Shader::loadFromFile(const char* vertex, const char* fragment) {
+	_id = ShaderManager::load(vertex, fragment);
+}
+Shader* Shader::copy() {
+	Shader* result = new Shader();
+	result->_id = _id;
+	return result;
 }
 
 void Shader::use() {
@@ -72,49 +45,79 @@ void Shader::setParameter(const char* name, float a) {
 	int l = glGetUniformLocation(_id, name);
 	glUniform1f(l, a);
 }
+void Shader::setParameter(const char* name, bool a) {
+	int l = glGetUniformLocation(_id, name);
+	glUniform1i(l, a ? 1 : 0);
+}
+template <typename T>
+void Shader::setParameter(const std::string& str, T val) {
+	setParameter(str.c_str(), val);
+}
 
-//使用int，出错用负数，未出错用正数
-int Shader::compile(const char* filename, shadertype type) {
-	std::ifstream file(filename);
-	char *program = 0;
-	int shader;
-	_success = 0;
-	_info = NULL;
-	if (type == vertex) {
-		shader = glCreateShader(GL_VERTEX_SHADER);
+void Shader::setAmbientLight(Light* light) {
+	if (light) {
+		setParameter("hasdirlight", true);
+		setParameter("dirLight.direction", light->getDirection());
+		setParameter("dirLight.ambient", light->getAmbientColor());
+		setParameter("dirLight.diffuse", light->getDiffuseColor());
+		setParameter("dirLight.specular", light->getSpecularColor());
 	}
 	else {
-		shader = glCreateShader(GL_FRAGMENT_SHADER);
+		setParameter("hasdirlight", false);
 	}
+}
 
-	//读取文件
-	std::streampos pos = file.tellg();
-	file.seekg(0, std::ios::end);
-	pos = file.tellg();
+void Shader::setPointLight(const std::vector<Light*>& lights) {
+	std::string buf;
+	char num[6];
+	setParameter("npointlight", (int)lights.size());
+	for (int i = 0; i < lights.size(); ++i) {
+		buf.clear();
+		buf += "pointLights[";
+		sprintf(num, "%d\0", i);
+		buf += num;
+		buf += "]";
 
-	file.seekg(0);
-	program = (char*)calloc(1 + pos, sizeof(char));
-	file.read(program, pos);
-	file.close();
-
-	//编译Shader
-	glShaderSource(shader, 1, (const GLchar* const*)&program, NULL);
-	glCompileShader(shader);
-	glGetShaderiv(shader, GL_COMPILE_STATUS, &_success);
-	if (!_success) {
-		_info = (char*)malloc(sizeof(char) * 512);
-		glGetShaderInfoLog(shader, 512, NULL, _info);
-		std::cout << _info;
-		return -1;
+		setParameter(buf + ".position",lights[i]->getPosition());
+		setParameter(buf + ".constant", lights[i]->getConstant());
+		setParameter(buf + ".linear", lights[i]->getLinear());
+		setParameter(buf + ".quadratic", lights[i]->getQuadratic());
+		setParameter(buf + ".ambient",lights[i]->getAmbientColor());
+		setParameter(buf + ".diffuse", lights[i]->getDiffuseColor());
+		setParameter(buf + ".specular", lights[i]->getSpecularColor());
 	}
+}
 
-	//release malloc memories
-	free(program);
-	return shader;
+void Shader::setSpotLight(const std::vector<Light*>& lights) {
+	std::string buf;
+	char num[6];
+	setParameter("nspotlight", (int)lights.size());
+	for (int i = 0; i < lights.size(); ++i) {
+		buf.clear();
+		buf += "spotLights[";
+		sprintf(num, "%d\0", i);
+		buf += num;
+		buf += "]";
+		
+		if (lights[i]->isCameraSpot()) {
+			setParameter(buf + ".cameraSpot", 1);
+		}
+		else {
+			setParameter(buf + ".cameraSpot", 0);
+			setParameter(buf + ".position", lights[i]->getPosition());
+			setParameter(buf + ".constant", lights[i]->getConstant());
+		}
+		setParameter(buf + ".constant", lights[i]->getConstant());
+		setParameter(buf + ".linear", lights[i]->getLinear());
+		setParameter(buf + ".quadratic", lights[i]->getQuadratic());
+		setParameter(buf + ".ambient", lights[i]->getAmbientColor());
+		setParameter(buf + ".diffuse", lights[i]->getDiffuseColor());
+		setParameter(buf + ".specular", lights[i]->getSpecularColor());
+		setParameter(buf + ".cutOff", lights[i]->getCutOff());
+		setParameter(buf + ".outerCutOff", lights[i]->getOuterCutOff());
+	}
 }
 
 Shader::~Shader() {
-	glDeleteProgram(_id);
-	if (_info)
-		free(_info);
+	ShaderManager::remove(_id);
 }

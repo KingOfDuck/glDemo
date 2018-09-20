@@ -70,11 +70,10 @@ glm::vec3 cubePositions[] = {
 	glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
+//Stage
 void AppWindow::initStage() {
 	_stage = new TestStage(this);
 }
-
-//Stage
 
 TestStage::TestStage(AppWindow *w) :
 	Stage(w) {
@@ -83,7 +82,6 @@ TestStage::TestStage(AppWindow *w) :
 	_camera = new Camera();
 	setPerspective(45.0f, (float)w->getClientWidth() / (float)w->getClientHeight(), 0.1f, 100.0f);
 	
-	_lights.push_back(new TestLight(vertices, 288, this));
 	for (int i = 0; i < 10; ++i) {
 		TestObject* t = new TestObject(vertices, 288, this);
 		t->moveTo(cubePositions[i].x,cubePositions[i].y,cubePositions[i].z);
@@ -92,7 +90,55 @@ TestStage::TestStage(AppWindow *w) :
 		_objects.push_back(t);
 	}
 
-	setAmbient(0, 0.1f);
+	//Add Lights
+	_lightmanager.addLight(new TestLight(vertices, 288), "ambient");
+	_lightmanager.setLightType(0, LightManager::lighttype::dir);
+	_lightmanager.setPosition(0, -4.0f, 1.2f, -8.0f);
+	_lightmanager.setDirection(0, -0.2f, -1.0f, -0.3f);
+	_lightmanager.setAmbientColor(0, 0.05f, 0.05f, 0.05f);
+	_lightmanager.setDiffuseColor(0, 0.4f, 0.4f, 0.4f);
+	_lightmanager.setSpecularColor(0, 0.5f, 0.5f, 0.5f);
+
+	
+	_lightmanager.addLight(new TestLight(vertices,288, this), "p0");
+	_lightmanager.setLightType(1, LightManager::lighttype::point);
+	_lightmanager.setPosition(1, 0.7f, 0.2f, 2.0f);
+	_lightmanager.setAmbientColor(1, 0.05f, 0.05f, 0.05f);
+	_lightmanager.setDiffuseColor(1, 0.8f, 0.8f, 0.8f);
+	_lightmanager.setSpecularColor(1, 1.0f, 1.0f, 1.0f);
+	_lightmanager.setPointLightLevel(1, 50);
+	
+	_lightmanager.addLight(new TestLight(vertices, 288, this), "p1");
+	_lightmanager.setLightType(2, LightManager::lighttype::point);
+	_lightmanager.setPosition(2, 2.3f, -3.3f, -4.0f);
+	_lightmanager.setAmbientColor(2, 0.05f, 0.05f, 0.05f);
+	_lightmanager.setDiffuseColor(2, 0.8f, 0.8f, 0.8f);
+	_lightmanager.setSpecularColor(2, 1.0f, 1.0f, 1.0f);
+	_lightmanager.setPointLightLevel(2, 50);
+
+	_lightmanager.addLight(new TestLight(vertices, 288, this), "p2");
+	_lightmanager.setLightType(3, LightManager::lighttype::point);
+	_lightmanager.setPosition(3, -4.0f, 2.0f, -12.0f);
+	_lightmanager.setAmbientColor(3, 0.05f, 0.05f, 0.05f);
+	_lightmanager.setDiffuseColor(3, 0.8f, 0.8f, 0.8f);
+	_lightmanager.setSpecularColor(3, 1.0f, 1.0f, 1.0f);
+	_lightmanager.setPointLightLevel(3, 50);
+
+	_lightmanager.addLight(new TestLight(vertices, 288, this), "p3");
+	_lightmanager.setLightType(4, LightManager::lighttype::point);
+	_lightmanager.setPosition(4, 0.0f, 0.0f, -3.0f);
+	_lightmanager.setAmbientColor(4, 0.05f, 0.05f, 0.05f);
+	_lightmanager.setDiffuseColor(4, 0.8f, 0.8f, 0.8f);
+	_lightmanager.setSpecularColor(4, 1.0f, 1.0f, 1.0f);
+	_lightmanager.setPointLightLevel(4, 50);
+
+	_lightmanager.addLight(new TestLight(vertices, 288), "s1");
+	_lightmanager.setLightType(5, LightManager::lighttype::cameraspot);
+	_lightmanager.setAmbientColor(5, 0.0f, 0.0f, 0.0f);
+	_lightmanager.setDiffuseColor(5, 1.0f, 1.0f, 1.0f);
+	_lightmanager.setSpecularColor(5, 1.0f, 1.0f, 1.0f);
+	_lightmanager.setPointLightLevel(5, 50);
+	_lightmanager.setSpotLightCutOff(5, 10.5f, 17.0f);
 }
 
 void TestStage::_inputProcess() {
@@ -123,40 +169,17 @@ void TestStage::_inputProcess() {
 	}
 	
 }
-void TestStage::step() {
+void TestStage::loop() {
 	//Step is divided into two parts: prepare and draw
 	_inputProcess();
-
-	//Preparing the informations for drawing: status, movements, textures, lightlings, shaders, ...
-
-	for (auto i = _lights.begin(); i != _lights.end(); ++i) {
-		(*i)->step();
-	}
-	for (auto i = _objects.begin(); i != _objects.end(); ++i) {
-		//TODO: Objects Movement
-		(*i)->step();
-	}
-
 }
 
-void TestStage::draw() {
-	Stage::draw();//Canvas & Camera
-	
-	//Draw all objects and lights
-	for (auto i = _lights.begin(); i != _lights.end(); ++i) {
-		(*i)->draw();
-	}
-	for (auto i = _objects.begin(); i != _objects.end(); ++i) {
-		(*i)->draw();
-	}
+void TestStage::paint() {
 }
 
 //Object
-
-TestObject::TestObject(float*vertices, int nvert, Stage* s):drawObject(s) {
-	_vertices = vertices;
-	_nvert = nvert;
-	_shader = new Shader("res/shaders/triangle.vert","res/shaders/triangle.frag");
+TestObject::TestObject(float*vertices, int nvert, Stage* s):drawObject(vertices, nvert, s) {
+	_shader = new Shader("res/shaders/defaultObject.vert","res/shaders/defaultObject.frag");
 	_material = new Material();
 	_texture.push_back(new Texture("res/textures/container2.png", GL_RGBA));
 	_texture.push_back(new Texture("res/textures/container2_specular.png", GL_RGBA));
@@ -176,24 +199,20 @@ void TestObject::step() {
 }
 
 void TestObject::paint() {
-	_shader->use();
 	_shader->setParameter("viewPos", _stage->getViewPoint());
+	_shader->setParameter("viewDir", _stage->getViewDir());
 	_shader->setParameter("material.ambient", _material->getAmbient());
 	_shader->setParameter("material.diffuse", 0);
 	_shader->setParameter("material.specular", 1);
 	_shader->setParameter("material.shininess", _material->getShininess());
 
-	if (_stage->getAmbientLight() != NULL) {
-		_shader->setParameter("light.color", _stage->getAmbientLight()->getLightColor());
-		_shader->setParameter("light.ambient", _stage->getAmbientLight()->getLightColor() * glm::vec3(0.2f));
-		_shader->setParameter("light.diffuse", _stage->getAmbientLight()->getLightColor() * glm::vec3(0.5f));
-		_shader->setParameter("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
-		_shader->setParameter("light.direction", glm::vec3(-0.2f,-1.0f,-0.3f));
-	}
-
 	_shader->setParameter("projection", _stage->getProjection());
 	_shader->setParameter("view", _stage->getView());
 	_shader->setParameter("model", _model);
+
+	_shader->setAmbientLight(_stage->manageLights().getAmbientLight());
+	_shader->setPointLight(_stage->manageLights().getPointLight());
+	_shader->setSpotLight(_stage->manageLights().getSpotLight());
 
 	_texture[0]->use(GL_TEXTURE0);
 	_texture[1]->use(GL_TEXTURE1);
@@ -217,9 +236,7 @@ TestLight::TestLight(float *vertices, int nvert, Stage *s) :Light(vertices, nver
 
 void TestLight::init() {
 	_shader = new Shader("res/shaders/triangle.vert", "res/shaders/lightcube.frag");
-	_lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
-	moveTo(1.2f, 1.0f, 2.0f);
-	scale(0.2f, 0.2f, 0.2f);
+	scale(0.2f, 0.2f, 0.2f);	
 	int groups[] = { 3,3,2 };
 	setVerticesFormatf(3, groups);
 }
@@ -231,9 +248,11 @@ void TestLight::step() {
 }
 
 void TestLight::paint() {
-	_shader->use();
-	_shader->setParameter("projection", _stage->getProjection());
-	_shader->setParameter("view", _stage->getView());
-	_shader->setParameter("model", _model);
-	glDrawArrays(GL_TRIANGLES, 0, _nvert);
+	//stage = NULL, 则不参与绘图
+	if (_stage) {
+		_shader->setParameter("projection", _stage->getProjection());
+		_shader->setParameter("view", _stage->getView());
+		_shader->setParameter("model", _model);
+		glDrawArrays(GL_TRIANGLES, 0, _nvert);
+	}
 }

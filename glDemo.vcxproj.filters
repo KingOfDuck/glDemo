@@ -24,9 +24,6 @@
     <ClInclude Include="src\object\object.h">
       <Filter>object</Filter>
     </ClInclude>
-    <ClInclude Include="src\object\properties\shader.h">
-      <Filter>object\properties</Filter>
-    </ClInclude>
     <ClInclude Include="src\object\properties\texture.h">
       <Filter>object\properties</Filter>
     </ClInclude>
@@ -44,6 +41,15 @@
     </ClInclude>
     <ClInclude Include="src\utils\ExData.h">
       <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object\manager\LightManager.h">
+      <Filter>object\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object\manager\ShaderManager.h">
+      <Filter>object\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object\properties\shader.h">
+      <Filter>object\properties</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -74,9 +80,6 @@
     <ClCompile Include="src\object\light.cpp">
       <Filter>object</Filter>
     </ClCompile>
-    <ClCompile Include="src\object\properties\shader.cpp">
-      <Filter>object\properties</Filter>
-    </ClCompile>
     <ClCompile Include="src\object\properties\texture.cpp">
       <Filter>object\properties</Filter>
     </ClCompile>
@@ -88,6 +91,15 @@
     </ClCompile>
     <ClCompile Include="src\utils\ExData.cpp">
       <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object\manager\LightManager.cpp">
+      <Filter>object\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object\manager\ShaderManager.cpp">
+      <Filter>object\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object\properties\shader.cpp">
+      <Filter>object\properties</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -115,15 +127,21 @@
     <Filter Include="stage">
       <UniqueIdentifier>{3b535e14-a436-4c71-96c7-2e202b5d8642}</UniqueIdentifier>
     </Filter>
+    <Filter Include="object\manager">
+      <UniqueIdentifier>{5c5d98af-d906-49dd-844b-2ee69cb855d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shaders\lightcube.frag">
       <Filter>res\shaders</Filter>
     </None>
-    <None Include="res\shaders\triangle.frag">
+    <None Include="res\shaders\triangle.vert">
       <Filter>res\shaders</Filter>
     </None>
-    <None Include="res\shaders\triangle.vert">
+    <None Include="res\shaders\defaultObject.frag">
+      <Filter>res\shaders</Filter>
+    </None>
+    <None Include="res\shaders\defaultObject.vert">
       <Filter>res\shaders</Filter>
     </None>
   </ItemGroup>

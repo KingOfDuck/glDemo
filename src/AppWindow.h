@@ -41,9 +41,9 @@ private:
 	static void mouseEnterCallback(GLFWwindow * window, int entered);
 	static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 	
-	//Customize init stage, Must be defined
-	//自定义stage初始化，必须手动定义
 	void initStage();
+
+	
 public:
 	enum InitCode {
 		success,
