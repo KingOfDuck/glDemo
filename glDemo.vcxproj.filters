@@ -21,23 +21,11 @@
     <ClInclude Include="src\object\light.h">
       <Filter>object</Filter>
     </ClInclude>
-    <ClInclude Include="src\object\object.h">
-      <Filter>object</Filter>
-    </ClInclude>
     <ClInclude Include="src\object\properties\texture.h">
       <Filter>object\properties</Filter>
     </ClInclude>
     <ClInclude Include="src\object\properties\material.h">
       <Filter>object\properties</Filter>
-    </ClInclude>
-    <ClInclude Include="src\myobject\TestLight.h">
-      <Filter>myobject</Filter>
-    </ClInclude>
-    <ClInclude Include="src\myobject\TestObject.h">
-      <Filter>myobject</Filter>
-    </ClInclude>
-    <ClInclude Include="src\myobject\TestStage.h">
-      <Filter>myobject</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\ExData.h">
       <Filter>utils</Filter>
@@ -45,11 +33,29 @@
     <ClInclude Include="src\object\manager\LightManager.h">
       <Filter>object\manager</Filter>
     </ClInclude>
-    <ClInclude Include="src\object\manager\ShaderManager.h">
-      <Filter>object\manager</Filter>
-    </ClInclude>
     <ClInclude Include="src\object\properties\shader.h">
       <Filter>object\properties</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object\Mesh.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object\manager\ResourceManager.h">
+      <Filter>object\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object\Model.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object\properties\drawer.h">
+      <Filter>object\properties</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object\object.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\myobject\TestVertObject.h">
+      <Filter>myobject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\myobject\TestModel.h">
+      <Filter>myobject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -74,17 +80,11 @@
     <ClCompile Include="src\object\canvas.cpp">
       <Filter>object</Filter>
     </ClCompile>
-    <ClCompile Include="src\object\drawobject.cpp">
-      <Filter>object</Filter>
-    </ClCompile>
     <ClCompile Include="src\object\light.cpp">
       <Filter>object</Filter>
     </ClCompile>
     <ClCompile Include="src\object\properties\texture.cpp">
       <Filter>object\properties</Filter>
-    </ClCompile>
-    <ClCompile Include="src\myobject\Test.cpp">
-      <Filter>myobject</Filter>
     </ClCompile>
     <ClCompile Include="src\object\properties\material.cpp">
       <Filter>object\properties</Filter>
@@ -95,11 +95,29 @@
     <ClCompile Include="src\object\manager\LightManager.cpp">
       <Filter>object\manager</Filter>
     </ClCompile>
-    <ClCompile Include="src\object\manager\ShaderManager.cpp">
-      <Filter>object\manager</Filter>
-    </ClCompile>
     <ClCompile Include="src\object\properties\shader.cpp">
       <Filter>object\properties</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object\manager\ResourceManager.cpp">
+      <Filter>object\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object\Mesh.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object\Model.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object\properties\drawer.cpp">
+      <Filter>object\properties</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object\object.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\myobject\TestVertObject.cpp">
+      <Filter>myobject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\myobject\TestModel.cpp">
+      <Filter>myobject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -144,5 +162,16 @@
     <None Include="res\shaders\defaultObject.vert">
       <Filter>res\shaders</Filter>
     </None>
+    <None Include="res\shaders\defaultMesh.frag">
+      <Filter>res\shaders</Filter>
+    </None>
+    <None Include="res\shaders\defaultMesh.vert">
+      <Filter>res\shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="lib\assimp-vc140-mt.lib">
+      <Filter>lib</Filter>
+    </Library>
   </ItemGroup>
 </Project>

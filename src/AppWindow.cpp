@@ -92,6 +92,7 @@ void AppWindow::use() {
 
 	//Init stages
 	initStage();
+	glEnable(GL_DEPTH_TEST);
 }
 
 void AppWindow::close() {

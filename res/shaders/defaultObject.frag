@@ -2,6 +2,9 @@
 out vec4 FragColor;
 
 struct Material{
+	vec3 diffuse_color;
+	vec3 specular_color;
+	int useTexture;
 	sampler2D diffuse;
 	sampler2D specular;
 	float shininess;//0.0f-128.0f
@@ -70,6 +73,7 @@ void main(){
 	if(hasdirlight == 1){
 		result = CalcDirLight(dirLight, norm, fragDir);
 	}
+
 	for(int i = 0; i < npointlight; i++){
 		result += CalcPointLight(pointLights[i], norm, FragPos, fragDir);    
 	}
@@ -95,7 +99,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 fragDir){
 }
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 fragDir){
 	vec3 lightDir = normalize(light.position - fragPos);
-    float diff = max(dot(normal, lightDir), 0.0);
+    float diff = max(dot(normal, lightDir),0.0);
 
     vec3 reflectDir = reflect(-lightDir, normal);
     float spec = pow(max(dot(fragDir, reflectDir), 0.0), material.shininess);
@@ -119,7 +123,7 @@ vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 fragDir){
 		ldir = light.direction;
 	}
 	vec3 lightDir = normalize(lpos - fragPos);
-    float diff = max(dot(normal, lightDir), 0.0);
+    float diff = abs(dot(normal, lightDir));
 
     vec3 reflectDir = reflect(-lightDir, normal);
     float spec = pow(max(dot(fragDir, reflectDir), 0.0), material.shininess);

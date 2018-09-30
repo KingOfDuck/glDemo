@@ -133,13 +133,15 @@
     <ClInclude Include="lib\stb_image.h" />
     <ClInclude Include="src\AppWindow.h" />
     <ClInclude Include="src\glDemo.h" />
-    <ClInclude Include="src\myobject\TestLight.h" />
-    <ClInclude Include="src\myobject\TestObject.h" />
-    <ClInclude Include="src\myobject\TestStage.h" />
+    <ClInclude Include="src\myobject\TestModel.h" />
+    <ClInclude Include="src\myobject\TestVertObject.h" />
     <ClInclude Include="src\object\light.h" />
     <ClInclude Include="src\object\manager\LightManager.h" />
-    <ClInclude Include="src\object\manager\ShaderManager.h" />
+    <ClInclude Include="src\object\manager\ResourceManager.h" />
+    <ClInclude Include="src\object\Mesh.h" />
+    <ClInclude Include="src\object\Model.h" />
     <ClInclude Include="src\object\object.h" />
+    <ClInclude Include="src\object\properties\drawer.h" />
     <ClInclude Include="src\object\properties\material.h" />
     <ClInclude Include="src\object\properties\shader.h" />
     <ClInclude Include="src\object\properties\texture.h" />
@@ -154,12 +156,16 @@
     <ClCompile Include="src\AppWindow.cpp" />
     <ClCompile Include="src\glDemo.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\myobject\Test.cpp" />
+    <ClCompile Include="src\myobject\TestModel.cpp" />
+    <ClCompile Include="src\myobject\TestVertObject.cpp" />
     <ClCompile Include="src\object\canvas.cpp" />
-    <ClCompile Include="src\object\drawobject.cpp" />
     <ClCompile Include="src\object\light.cpp" />
     <ClCompile Include="src\object\manager\LightManager.cpp" />
-    <ClCompile Include="src\object\manager\ShaderManager.cpp" />
+    <ClCompile Include="src\object\manager\ResourceManager.cpp" />
+    <ClCompile Include="src\object\Mesh.cpp" />
+    <ClCompile Include="src\object\Model.cpp" />
+    <ClCompile Include="src\object\object.cpp" />
+    <ClCompile Include="src\object\properties\drawer.cpp" />
     <ClCompile Include="src\object\properties\material.cpp" />
     <ClCompile Include="src\object\properties\shader.cpp" />
     <ClCompile Include="src\object\properties\texture.cpp" />
@@ -170,10 +176,15 @@
     <ClCompile Include="src\utils\time.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\shaders\defaultMesh.frag" />
+    <None Include="res\shaders\defaultMesh.vert" />
     <None Include="res\shaders\defaultObject.frag" />
     <None Include="res\shaders\defaultObject.vert" />
     <None Include="res\shaders\lightcube.frag" />
     <None Include="res\shaders\triangle.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="lib\assimp-vc140-mt.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

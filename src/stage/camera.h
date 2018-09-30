@@ -1,7 +1,6 @@
 #ifndef __CAMERA_H
 #define __CAMERA_H
 #include <Windows.h>
-#include <gl/GLU.h>
 #include <glm/vec3.hpp>
 #include <glm/mat4x4.hpp>
 
@@ -14,9 +13,9 @@
 
 class Camera {
 private:
-	GLfloat _pitch;
-	GLfloat _yaw;
-	GLfloat _speed;//camera speed
+	float _pitch;
+	float _yaw;
+	float _speed;//camera speed
 	glm::vec3 _pos;//position
 	glm::vec3 _front;//front vector
 	glm::vec3 _up;//up vector
@@ -40,7 +39,7 @@ public:
 	void step();
 
 	//…Ë÷√ÀŸ∂»
-	inline void setSpeed(GLfloat s) { _speed = s; }
+	inline void setSpeed(float s) { _speed = s; }
 	inline const glm::vec3& getPosition() {
 		return _pos;
 	}

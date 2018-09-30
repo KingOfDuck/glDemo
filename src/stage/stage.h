@@ -6,27 +6,49 @@
 #include <glm/mat4x4.hpp>
 #include "../object/manager/LightManager.h"
 
+#define STAGE_NAME_VIEWPOS "viewPos"
+#define STAGE_NAME_VIEWDIR "viewDir"
+#define STAGE_NAME_PROJECTION "projection"
+#define STAGE_NAME_VIEW "view"
+
 class Camera;
 class Object;
 class Canvas;
 class AppWindow;
-//stage class, a container of one single scene
-/*
+class Light;
+/** @class Stage
+* @brief a conatiner of objects
 * 1. Stage
-	A stage is composed of Objects and one canvas, with which Objects can draw on it. 
+A stage is composed of Objects and one canvas, with which Objects can draw on it.
 In order to observe the whole stage, a Camera is also needed.
 
 * 2. Lights managing
-		User(coder) can use the interfaces of LightManager to manage lights, LightManager
-	gives out the interfaces of controlling lights, and also the interfaces of getting
-	light informations.
-		There are three kind of lights defined, which are ambient(dir), point as well as
-	spotlight. Only one dir light is allowed in one stage, and up-to 16 point lights and
-	sopt lights are allowed. Also no light is allowed.
-		Use Stage->manageLights()->... to control the lights of this stage.
+User(coder) can use the interfaces of LightManager to manage lights, LightManager
+gives out the interfaces of controlling lights, and also the interfaces of getting
+light informations.
+There are three kind of lights defined, which are ambient(dir), point as well as
+spotlight. Only one dir light is allowed in one stage, and up-to 16 point lights and
+sopt lights are allowed. Also no light is allowed.
+Use Stage->manageLights()->... to control the lights of this stage.
+
+* @exaplmples
+   class TS: public Stage{
+   public: 
+		TS(AppWindow *w):Stage(w){
+		_canvas = new Canvas(0.0f, 0.0f, 0.0f);
+		_camera = new Camera();
+		setPerspective(45.0f, (float)w->getClientWidth() / (float)w->getClientHeight(), 0.1f, 100.0f);
+		//Add Lights
+		_lightmanager.addLight(..., "ambient");
+		//Add Objects
+		...
+		}
+		void paint(){...}//draw objects here
+		void loop(){...]//loop here
+	}
 */
-class Light;
 class Stage {
+	friend class AppWindow;
 protected:
 	std::vector<Object*> _objects;//Objects, alternative
 	Canvas* _canvas;//Canvas, must have one
@@ -60,8 +82,6 @@ public:
 
 	virtual void paint() = 0;
 	virtual void loop() = 0;
-	void draw();
-	void step();
 private:
 	//banned
 	Stage();
@@ -71,4 +91,6 @@ private:
 
 	//Input Process
 	virtual void _inputProcess() = 0;
+	void draw();
+	void step();
 };

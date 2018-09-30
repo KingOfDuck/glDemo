@@ -3,35 +3,58 @@
 #include <glm/mat4x4.hpp>
 #include <vector>
 #include <string>
+#include <iostream>
+#include <glad/glad.h>
 
 #define SHADER_VERT_COMPILE_ERROR -1
 #define SHADER_FRAG_COMPILE_ERROR -2
 #define SHADER_ERROR_FILENAME -3
 
 class Light;
+class Texture;
 class Shader {
 private:
 	unsigned int _id;//Program ID
 public:
-	Shader(const char* vertex, const char* fragment);
+	static Shader* LoadFromFile(const char* vertex, const char* fragment);
 	Shader* copy();
-	void loadFromFile(const char* vertex, const char* fragment);
 
 	void use();
-	void setParameter(const char* name, int val);
-	void setParameter(const char* name, const glm::vec3 &color);
-	void setParameter(const char* name, const glm::mat4 &matrix);
-	void setParameter(const char* name, float val);
-	void setParameter(const char* name, bool val);
+
 	void setAmbientLight(Light* light);
 	void setPointLight(const std::vector<Light*>& lights);
 	void setSpotLight(const std::vector<Light*>& lights);
 
+
+
 	template <typename T>
-	void setParameter(const std::string & str, T val);
+	void setParameter(const std::string& name, T val) {
+		int l = glGetUniformLocation(_id, name.c_str());
+		if (l < 0) {
+			std::cout << name;
+			return;
+		}
+		setParameter(l, val);
+	}
+
+	template <typename M>
+	void setParameter(const char* name, M val) {
+		int l = glGetUniformLocation(_id, name);
+		if (l < 0) {
+			std::cout << name;
+			return;
+		}
+		setParameter(l, val);
+	}
 
 	~Shader();
 private:
+	void setParameter(int id, int val);
+	void setParameter(int id, glm::vec3 color);
+	void setParameter(int id, glm::mat4 matrix);
+	void setParameter(int id, float val);
+	void setParameter(int id, bool val);
+
 	Shader();
 	Shader(Shader &);
 	Shader(Shader &&);

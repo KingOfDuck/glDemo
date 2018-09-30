@@ -34,7 +34,6 @@ void Stage::setPerspective(float fov, float ar, float n, float f) {
 }
 
 void Stage::draw() {
-	glEnable(GL_DEPTH_TEST);
 	_canvas->draw();
 	_camera->step();
 	_lightmanager.draw();

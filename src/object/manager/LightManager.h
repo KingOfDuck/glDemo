@@ -17,15 +17,15 @@ class Light;
 	删除光照
 	设定光照类型（环境光，聚光，点光，不使用）
 	获取光照信息（环境光，聚光，点光）
- * 环境光数量必须小于1
- * 聚光数量每个镜头使用一个（耦合？）
+ * 环境光数量不大于1，指定新环境光会覆盖旧环境光
+ * 聚光拥有最大数量（MAXSPOTLIGHT）
  * 点光拥有最大数量（MAXPOINTLIGHT）
  */
 class LightManager {
 public:
-	enum lighttype {
-		unset,
-		deleted,
+	enum type{
+		unset,//default
+		deleted,//Unused now
 		dir,//环境光
 		point,//点光源
 		spot,//聚光
@@ -60,13 +60,13 @@ public:
 	void deleteLight(const std::string& lightname);
 
 	//Id设置灯光类型
-	void setLightType(int index, lighttype type);
+	void setLightType(int index, type type);
 	//地址设置灯光类型
-	void setLightType(Light* light, lighttype type);
+	void setLightType(Light* light, type type);
 	//按名称设置灯光类型
-	void setLightType(const char* lightname, lighttype type);
+	void setLightType(const char* lightname, type type);
 	//按名称设置灯光类型
-	void setLightType(const std::string& lightname, lighttype type);
+	void setLightType(const std::string& lightname, type type);
 
 	//修改光照信息
 	//修改环境光颜色

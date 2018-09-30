@@ -1,11 +1,9 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "shader.h"
-#include "../manager/ShaderManager.h"
+#include "../manager/ResourceManager.h"
 #include "../light.h"
-#include <iostream>
 #include <sstream>
 #include <fstream>
-#include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <string>
 
@@ -14,12 +12,13 @@
 //private 构造，copy()使用
 Shader::Shader():_id(-1){
 }
-Shader::Shader(const char* vertex, const char* fragment){
-	loadFromFile(vertex, fragment);
+
+Shader* Shader::LoadFromFile(const char* vertex, const char* fragment){
+	Shader* res = new Shader();
+	res->_id = ResourceManager::loadShader(vertex, fragment);
+	return res;
 }
-void Shader::loadFromFile(const char* vertex, const char* fragment) {
-	_id = ShaderManager::load(vertex, fragment);
-}
+
 Shader* Shader::copy() {
 	Shader* result = new Shader();
 	result->_id = _id;
@@ -29,95 +28,86 @@ Shader* Shader::copy() {
 void Shader::use() {
 	glUseProgram(_id);
 }
-void Shader::setParameter(const char* name, int val) {
-	int l = glGetUniformLocation(_id, name);
+void Shader::setParameter(int l, int val) {
 	glUniform1i(l, val);
 }
-void Shader::setParameter(const char* name, const glm::mat4 &m) {
-	int l = glGetUniformLocation(_id, name);
+void Shader::setParameter(int l, glm::mat4 m) {
 	glUniformMatrix4fv(l, 1, GL_FALSE, glm::value_ptr(m));
 }
-void Shader::setParameter(const char* name, const glm::vec3 &v) {
-	int l = glGetUniformLocation(_id, name);
+void Shader::setParameter(int l, glm::vec3 v) {
 	glUniform3fv(l, 1, &v[0]);
 }
-void Shader::setParameter(const char* name, float a) {
-	int l = glGetUniformLocation(_id, name);
+void Shader::setParameter(int l, float a) {
 	glUniform1f(l, a);
 }
-void Shader::setParameter(const char* name, bool a) {
-	int l = glGetUniformLocation(_id, name);
+void Shader::setParameter(int l, bool a) {
 	glUniform1i(l, a ? 1 : 0);
-}
-template <typename T>
-void Shader::setParameter(const std::string& str, T val) {
-	setParameter(str.c_str(), val);
 }
 
 void Shader::setAmbientLight(Light* light) {
 	if (light) {
-		setParameter("hasdirlight", true);
-		setParameter("dirLight.direction", light->getDirection());
-		setParameter("dirLight.ambient", light->getAmbientColor());
-		setParameter("dirLight.diffuse", light->getDiffuseColor());
-		setParameter("dirLight.specular", light->getSpecularColor());
+		setParameter(LIGHT_BOOL_HASDIRLIGHT, true);
+		setParameter(std::string(LIGHT_NAME_DIRLIGHT)+ LIGHT_ATTR_DIRECTION, light->getDirection());
+		setParameter(std::string(LIGHT_NAME_DIRLIGHT) + LIGHT_ATTR_AMBIENT, light->getAmbientColor());
+		setParameter(std::string(LIGHT_NAME_DIRLIGHT) + LIGHT_ATTR_DIFFUSE, light->getDiffuseColor());
+		setParameter(std::string(LIGHT_NAME_DIRLIGHT) + LIGHT_ATTR_SPECULAR, light->getSpecularColor());
 	}
 	else {
-		setParameter("hasdirlight", false);
+		setParameter(LIGHT_BOOL_HASDIRLIGHT, false);
 	}
 }
 
 void Shader::setPointLight(const std::vector<Light*>& lights) {
 	std::string buf;
 	char num[6];
-	setParameter("npointlight", (int)lights.size());
+	setParameter(LIGHT_NUMBER_POINTLIGHT, (int)lights.size());
 	for (int i = 0; i < lights.size(); ++i) {
 		buf.clear();
-		buf += "pointLights[";
+		buf = buf + LIGHT_NAME_POINTLIGHT + "[";
 		sprintf(num, "%d\0", i);
 		buf += num;
 		buf += "]";
 
-		setParameter(buf + ".position",lights[i]->getPosition());
-		setParameter(buf + ".constant", lights[i]->getConstant());
-		setParameter(buf + ".linear", lights[i]->getLinear());
-		setParameter(buf + ".quadratic", lights[i]->getQuadratic());
-		setParameter(buf + ".ambient",lights[i]->getAmbientColor());
-		setParameter(buf + ".diffuse", lights[i]->getDiffuseColor());
-		setParameter(buf + ".specular", lights[i]->getSpecularColor());
+		setParameter(buf + LIGHT_ATTR_POSITION,lights[i]->getPosition());
+		setParameter(buf + LIGHT_ATTR_CONSTANT, lights[i]->getConstant());
+		setParameter(buf + LIGHT_ATTR_LINEAR, lights[i]->getLinear());
+		setParameter(buf + LIGHT_ATTR_QUADRATIC, lights[i]->getQuadratic());
+		setParameter(buf + LIGHT_ATTR_AMBIENT,lights[i]->getAmbientColor());
+		setParameter(buf + LIGHT_ATTR_DIFFUSE, lights[i]->getDiffuseColor());
+		setParameter(buf + LIGHT_ATTR_SPECULAR, lights[i]->getSpecularColor());
 	}
 }
 
 void Shader::setSpotLight(const std::vector<Light*>& lights) {
 	std::string buf;
 	char num[6];
-	setParameter("nspotlight", (int)lights.size());
+	setParameter(LIGHT_NUMBER_SPOTLIGHT, (int)lights.size());
 	for (int i = 0; i < lights.size(); ++i) {
 		buf.clear();
-		buf += "spotLights[";
+		buf = buf + LIGHT_NAME_SPOTLIGHT + "[";
 		sprintf(num, "%d\0", i);
 		buf += num;
 		buf += "]";
 		
 		if (lights[i]->isCameraSpot()) {
-			setParameter(buf + ".cameraSpot", 1);
+			setParameter(buf + LIGHT_ATTR_ISCAMERASPOT, true);
 		}
 		else {
-			setParameter(buf + ".cameraSpot", 0);
-			setParameter(buf + ".position", lights[i]->getPosition());
-			setParameter(buf + ".constant", lights[i]->getConstant());
+			setParameter(buf + LIGHT_ATTR_ISCAMERASPOT, false);
+			setParameter(buf + LIGHT_ATTR_POSITION, lights[i]->getPosition());
+			setParameter(buf + LIGHT_ATTR_DIRECTION, lights[i]->getDirection());
 		}
-		setParameter(buf + ".constant", lights[i]->getConstant());
-		setParameter(buf + ".linear", lights[i]->getLinear());
-		setParameter(buf + ".quadratic", lights[i]->getQuadratic());
-		setParameter(buf + ".ambient", lights[i]->getAmbientColor());
-		setParameter(buf + ".diffuse", lights[i]->getDiffuseColor());
-		setParameter(buf + ".specular", lights[i]->getSpecularColor());
-		setParameter(buf + ".cutOff", lights[i]->getCutOff());
-		setParameter(buf + ".outerCutOff", lights[i]->getOuterCutOff());
+		setParameter(buf + LIGHT_ATTR_CONSTANT, lights[i]->getConstant());
+		setParameter(buf + LIGHT_ATTR_LINEAR, lights[i]->getLinear());
+		setParameter(buf + LIGHT_ATTR_QUADRATIC, lights[i]->getQuadratic());
+		setParameter(buf + LIGHT_ATTR_AMBIENT, lights[i]->getAmbientColor());
+		setParameter(buf + LIGHT_ATTR_DIFFUSE, lights[i]->getDiffuseColor());
+		setParameter(buf + LIGHT_ATTR_SPECULAR, lights[i]->getSpecularColor());
+		setParameter(buf + LIGHT_ATTR_CUTOFF, lights[i]->getCutOff());
+		setParameter(buf + LIGHT_ATTR_OUTERCUTOFF, lights[i]->getOuterCutOff());
 	}
 }
 
 Shader::~Shader() {
-	ShaderManager::remove(_id);
+	ResourceManager::removeShader(_id);
 }

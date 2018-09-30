@@ -8,7 +8,7 @@ LightManager::LightManager():_ambientlight(LIGHTM_NODIRLIGHT){
 void LightManager::addLight(Light* light, const char* name) {
 	_lightmap.insert(std::pair<std::string, int>(name,(int)_lights.size()));
 
-	light->_type = lighttype::unset;
+	light->_type = type::unset;
 
 	//先插入空位
 	for (auto i = _lights.begin(); i != _lights.end(); i++) {
@@ -23,7 +23,7 @@ void LightManager::addLight(Light* light, const char* name) {
 void LightManager::addLight(Light* light, const std::string& name) {
 	_lightmap.insert(std::pair<std::string, int>(name, (int)_lights.size()));
 
-	light->_type = lighttype::unset;
+	light->_type = type::unset;
 	//先插入空位
 	for (auto i = _lights.begin(); i != _lights.end(); i++) {
 		if (*i == NULL) {
@@ -50,18 +50,18 @@ void LightManager::deleteLight(int index) {
 	//环境光删除，则场景无环境光
 	switch (_lights[index]->_type)
 	{
-	case lighttype::deleted:
+	case type::deleted:
 		//TODO: LOG re-delete
 		break;
-	case lighttype::unset:
+	case type::unset:
 		break;
-	case lighttype::dir:
+	case type::dir:
 		_ambientlight = LIGHTM_NODIRLIGHT;
 		break;
-	case lighttype::point:
+	case type::point:
 		_npointlight--;
 		break;
-	case lighttype::spot:
+	case type::spot:
 		_nspotlight--;
 		break;
 	default:
@@ -80,7 +80,7 @@ void LightManager::deleteLight(const std::string& lightname) {
 	deleteLight(getLightIndex(lightname));
 }
 
-void LightManager::setLightType(int index, lighttype type) {
+void LightManager::setLightType(int index, type type) {
 	if (index < 0) {
 		//TODO:Log 光照删除错误
 		return;
@@ -88,24 +88,24 @@ void LightManager::setLightType(int index, lighttype type) {
 	//可设置为环境光，聚光和点光
 	switch (type)
 	{
-	case lighttype::dir:
+	case type::dir:
 		if (_ambientlight != -1) {
 			if (_lights[_ambientlight] != NULL) {
-				_lights[_ambientlight]->_type = lighttype::unset;
+				_lights[_ambientlight]->_type = type::unset;
 			}
 		}
 		_lights[index]->_type = type;
 		_ambientlight = index;
 		break;
-	case lighttype::point:
+	case type::point:
 		if (_npointlight >= LIGHTM_MAXPOINTLIGHT) {
 			//TODO:LOG too many pointlights
 			_npointlight++;
 		}
 		_lights[index]->_type = type;
 		break;
-	case lighttype::spot:
-	case lighttype::cameraspot:
+	case type::spot:
+	case type::cameraspot:
 		if (_nspotlight >= LIGHTM_MAXSPOTLIGHT) {
 			//TODO:LOG too many spotlights
 			_nspotlight++;
@@ -117,13 +117,13 @@ void LightManager::setLightType(int index, lighttype type) {
 		break;
 	}
 }
-void LightManager::setLightType(Light* light, lighttype type) {
+void LightManager::setLightType(Light* light, type type) {
 	setLightType(getLightIndex(light),type);
 }
-void LightManager::setLightType(const char* lightname, lighttype type) {
+void LightManager::setLightType(const char* lightname, type type) {
 	setLightType(getLightIndex(lightname), type);
 }
-void LightManager::setLightType(const std::string& lightname, lighttype type) {
+void LightManager::setLightType(const std::string& lightname, type type) {
 	setLightType(getLightIndex(lightname), type);
 }
 
@@ -341,7 +341,7 @@ std::vector<Light*> LightManager::getPointLight() {
 	std::vector<Light*> lights;
 	lights.clear();
 	for (int i = 0; i < _lights.size(); ++i) {
-		if (_lights[i]->_type == lighttype::point)
+		if (_lights[i]->_type == type::point)
 			lights.push_back(_lights[i]);
 	}
 	return lights;
@@ -351,7 +351,7 @@ std::vector<Light*> LightManager::getSpotLight() {
 	std::vector<Light*> lights;
 	lights.clear();
 	for (int i = 0; i < _lights.size(); ++i) {
-		if (_lights[i]->_type == lighttype::spot || _lights[i]->_type == lighttype::cameraspot)
+		if (_lights[i]->_type == type::spot || _lights[i]->_type == type::cameraspot)
 			lights.push_back(_lights[i]);
 	}
 	return lights;
@@ -382,14 +382,14 @@ int LightManager::getLightIndex(const std::string& lightname) {
 
 void LightManager::step() {
 	for (auto i = _lights.begin(); i != _lights.end(); ++i) {
-		if ((*i)->_type > lighttype::deleted) {
+		if ((*i)->_type > type::deleted) {
 			(*i)->step();		
 		}
 	}
 }
 void LightManager::draw() {
 	for (auto i = _lights.begin(); i != _lights.end(); ++i) {
-		if ((*i)->_type > lighttype::deleted)
+		if ((*i)->_type > type::deleted)
 			(*i)->draw();
 	}
 }

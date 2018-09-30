@@ -1,26 +1,31 @@
 #include "texture.h"
-#define STB_IMAGE_IMPLEMENTATION
 #include "../../../lib/stb_image.h"
 #include <glad/glad.h>
 #include <iostream>
+#include "../manager/ResourceManager.h"
 
-Texture::Texture(const char* filename, int format) {
-	int w, h, channel;
-	unsigned char* data = stbi_load(filename, &w, &h, &channel, 0);
-	if (!data) {
-		std::cout << "Failed to load texture";
-		return;
-	}
+Texture::Texture(const char* filename) {
+	_id = ResourceManager::loadTexture(filename);
+	_type = type::unset;
+}
 
-	glGenTextures(1, &_id);
-	glBindTexture(GL_TEXTURE_2D, _id);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, format, GL_UNSIGNED_BYTE, data);
-	glGenerateMipmap(GL_TEXTURE_2D);
-	stbi_image_free(data);
+Texture& Texture::operator = (const Texture &t) {
+	if (this == &t) return *this;
+	ResourceManager::useTexture(t._id);
+	_id = t._id;
+	_type = t._type;
+	return *this;
+}
+
+Texture::Texture(const Texture& t) {
+	ResourceManager::useTexture(t._id);
+	_id = t._id;
+	_type = t._type;
+}
+Texture::Texture(Texture&& t) {
+	ResourceManager::useTexture(t._id);
+	_id = t._id;
+	_type = t._type;
 }
 
 void Texture::use(int glid) {
@@ -29,5 +34,5 @@ void Texture::use(int glid) {
 }
 
 Texture::~Texture() {
-	glDeleteTextures(1, &_id);
+	ResourceManager::removeTexture(_id);
 }

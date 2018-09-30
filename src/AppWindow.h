@@ -1,3 +1,6 @@
+/** @filename AppWindow.h
+* @brief 简单包装GLFWwindow, 作为程序的主窗口
+*/
 #ifndef __APPWINDOW_H
 #define __APPWINDOW_H
 
@@ -41,6 +44,15 @@ private:
 	static void mouseEnterCallback(GLFWwindow * window, int entered);
 	static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 	
+	/** @function initStage()
+	* @brief Init the stage in the window
+		User Must init the stage manually, should be changed later
+	  @example 
+		class TS: public Stage{...}//see Stage
+		void AppWindow::initStage(){
+			_stage = new TS(this);
+		}
+	*/
 	void initStage();
 
 	

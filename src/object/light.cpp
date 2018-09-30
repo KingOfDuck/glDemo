@@ -2,18 +2,19 @@
 #include "properties/shader.h"
 #include <glm/glm.hpp>
 
-Light::Light(float* vertices, int nvert, Stage *s) :drawObject(vertices, nvert, s),
-_ambient(1.0f, 1.0f, 1.0f), _diffuse(1.0f, 1.0f, 1.0f), _specular(1.0f, 1.0f, 1.0f),
+Light::Light(Stage *s):Object(s),_ambient(1.0f, 1.0f, 1.0f), _diffuse(1.0f, 1.0f, 1.0f), _specular(1.0f, 1.0f, 1.0f),
 _direction(0.0f), _constant(1.0f), _linear(1.0f), _quadratic(1.0f),
-_cutOff(14.0f), _outerCutOff(17.0f), _type(LightManager::lighttype::unset) {
+_cutOff(14.0f), _outerCutOff(17.0f), _type(LightManager::type::unset) {
 	
 }
 
 void Light::setPosition(float x, float y, float z) {
-	moveTo(x, y, z);
+	_position.x = x;
+	_position.y = y;
+	_position.z = z;
 }
 void Light::setPosition(const glm::vec3& pos) {
-	moveTo(pos.x, pos.y, pos.z);
+	_position = pos;
 }
 void Light::setDirection(float x, float y, float z) {
 	_direction.x = x;
@@ -59,4 +60,24 @@ void Light::setPointLightLevel(float level) {
 	_constant = 1.0f;
 	_linear = 4.5f / level;
 	_quadratic = 75.0f / (level * level);
+}
+
+
+vertLight::vertLight(Stage* s, float* vertices, int nvert):Light(s),vertObject(s){
+	vertObject::setVertices(vertices, nvert);
+}
+
+
+void vertLight::setPosition(float x, float y, float z) {
+	Light::setPosition(x, y, z);
+	moveTo(x, y, z);
+}
+
+void vertLight::setPosition(const glm::vec3& pos) {
+	Light::setPosition(pos);
+	moveTo(pos.x, pos.y, pos.z);
+}
+
+void vertLight::draw() {
+	Entity::draw();
 }
